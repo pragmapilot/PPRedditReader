@@ -38,30 +38,49 @@
 
 #pragma mark - UIWebViewDelegate
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
+-(void)webViewDidStartLoad:(UIWebView *)webView
 {
+    self.loadingMessageLabel.text = @"Loading data...";
     self.loadingMessageLabel.hidden = NO;
     
     [self.activityIndicator startAnimating];
     self.activityIndicator.hidden = NO;
+    
+    self.backButton.enabled = NO;
+    self.forwardButton.enabled = NO;
+    self.refreshButton.enabled = NO;
+    self.stopLoadingButton.enabled = YES;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+-(void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
     
     self.loadingMessageLabel.hidden = YES;
     self.webView.hidden = NO;
+    self.toolBar.hidden = NO;
+    
+    if(self.webView.canGoBack)
+        self.backButton.enabled = YES;
+    
+    if (self.webView.canGoForward)
+        self.forwardButton.enabled = YES;
+    
+    self.refreshButton.enabled = YES;
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
-    
-    // TODO retry button
+
+    self.loadingMessageLabel.hidden = NO;
     self.loadingMessageLabel.text = @"Can't load content.";
+    
+    self.toolBar.hidden = NO;
+    self.refreshButton.enabled = YES;
+    self.stopLoadingButton.enabled = NO;
 }
 
 @end

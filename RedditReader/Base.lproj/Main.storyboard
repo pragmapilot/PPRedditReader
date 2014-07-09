@@ -147,14 +147,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView hidden="YES" contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JLh-1Y-YNe">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="s0U-re-juZ" id="bMM-ZZ-7Y8"/>
-                                </connections>
-                            </webView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="znR-N4-bJH">
                                 <rect key="frame" x="150" y="274" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -166,23 +158,68 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <webView hidden="YES" contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JLh-1Y-YNe">
+                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="s0U-re-juZ" id="bMM-ZZ-7Y8"/>
+                                </connections>
+                            </webView>
+                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLs-od-8hK">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="&lt;" id="eyN-L4-BdI">
+                                        <connections>
+                                            <action selector="goBack" destination="JLh-1Y-YNe" id="18r-fs-sOc"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="dGE-Vm-emi"/>
+                                    <barButtonItem title=">" id="F3j-TN-kdx">
+                                        <connections>
+                                            <action selector="goForward" destination="JLh-1Y-YNe" id="sJr-bx-Kl2"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Lkx-23-m6C"/>
+                                    <barButtonItem title="↺" id="ife-hX-5GK">
+                                        <connections>
+                                            <action selector="reload" destination="JLh-1Y-YNe" id="25M-ps-TJK"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="qRd-99-mQD"/>
+                                    <barButtonItem title="x" id="a6P-v1-atg">
+                                        <connections>
+                                            <action selector="stopLoading" destination="JLh-1Y-YNe" id="ISZ-if-suX"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="fLs-od-8hK" firstAttribute="leading" secondItem="PGF-1V-xS3" secondAttribute="leading" id="4SY-YK-i0f"/>
                             <constraint firstAttribute="centerY" secondItem="znR-N4-bJH" secondAttribute="centerY" id="6H5-kA-EcM"/>
-                            <constraint firstItem="has-rR-Xiu" firstAttribute="top" secondItem="JLh-1Y-YNe" secondAttribute="bottom" id="EmO-lC-1ZP"/>
                             <constraint firstAttribute="trailing" secondItem="JLh-1Y-YNe" secondAttribute="trailing" id="Htp-uy-S6r"/>
+                            <constraint firstAttribute="trailing" secondItem="fLs-od-8hK" secondAttribute="trailing" id="IQn-t4-81u"/>
                             <constraint firstItem="ZgE-GV-dZB" firstAttribute="centerX" secondItem="znR-N4-bJH" secondAttribute="centerX" id="YQ9-87-mTv"/>
                             <constraint firstItem="JLh-1Y-YNe" firstAttribute="leading" secondItem="PGF-1V-xS3" secondAttribute="leading" id="bIo-5h-ZXD"/>
+                            <constraint firstItem="fLs-od-8hK" firstAttribute="top" secondItem="JLh-1Y-YNe" secondAttribute="bottom" id="jEc-88-1tA"/>
                             <constraint firstAttribute="centerX" secondItem="znR-N4-bJH" secondAttribute="centerX" id="lwQ-MP-5iM"/>
                             <constraint firstItem="ZgE-GV-dZB" firstAttribute="centerY" secondItem="znR-N4-bJH" secondAttribute="centerY" constant="24" id="mO5-4f-noh"/>
-                            <constraint firstItem="JLh-1Y-YNe" firstAttribute="top" secondItem="PGF-1V-xS3" secondAttribute="top" id="qGE-Nh-blF"/>
+                            <constraint firstItem="JLh-1Y-YNe" firstAttribute="top" secondItem="PGF-1V-xS3" secondAttribute="top" constant="64" id="qGE-Nh-blF"/>
+                            <constraint firstItem="has-rR-Xiu" firstAttribute="top" secondItem="fLs-od-8hK" secondAttribute="bottom" id="v2Z-Kv-3FH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="SubReddit" id="Ukn-Mt-LhD"/>
                     <connections>
                         <outlet property="activityIndicator" destination="znR-N4-bJH" id="zu9-dM-5Zu"/>
+                        <outlet property="backButton" destination="eyN-L4-BdI" id="2uK-s6-5P1"/>
+                        <outlet property="forwardButton" destination="F3j-TN-kdx" id="vJm-DD-K6n"/>
                         <outlet property="loadingMessageLabel" destination="ZgE-GV-dZB" id="Efa-Nf-aLO"/>
+                        <outlet property="refreshButton" destination="ife-hX-5GK" id="b05-Am-Vwa"/>
+                        <outlet property="stopLoadingButton" destination="a6P-v1-atg" id="gjn-1E-kaJ"/>
+                        <outlet property="toolBar" destination="fLs-od-8hK" id="vlG-5D-emX"/>
                         <outlet property="webView" destination="JLh-1Y-YNe" id="CwZ-MQ-7yT"/>
                     </connections>
                 </viewController>
