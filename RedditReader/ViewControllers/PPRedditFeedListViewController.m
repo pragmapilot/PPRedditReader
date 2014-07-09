@@ -10,6 +10,8 @@
 #import "PPRedditFeedManager.h"
 #import "PPRedditFeedCell.h"
 #import "PPRedditFeedCell+DataBind.h"
+#import "PPSubRedditViewController.h"
+#import "PPRedditFeed.h"
 
 @interface PPRedditFeedListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -61,6 +63,24 @@
     }];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"feedListToSubRedditSegue"])
+    {
+        // Hide back button title...cool one! :-)
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                               style:UIBarButtonItemStylePlain
+                                                                              target:nil
+                                                                              action:nil];
+
+        NSIndexPath *indexPathOfSelectedRow = [self.table indexPathForSelectedRow];
+        PPRedditFeed *subReddit = self.redditPosts[indexPathOfSelectedRow.row];
+        
+        PPSubRedditViewController *destinationVC = segue.destinationViewController;
+        destinationVC.feed = subReddit;
+    }
+}
+
 #pragma mark - UITableViewDataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -82,6 +102,5 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
 
 @end

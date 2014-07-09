@@ -136,17 +136,6 @@ static NSInteger const numComments = baseInteger + 2;
 
 -(PPRedditFeedCell*)cellForIndexPath: (NSIndexPath*)indexPath
 {
-    // tableView:cellForRowAtIndexPath is not public, so it has to be invoked with preformSelector, on main thread
-   /* __block PPRedditFeedCell *cell = nil;
-    
-    NSOperationQueue* targetQueue = [NSOperationQueue mainQueue];
-    
-    [targetQueue addOperationWithBlock:^{
-        cell = [self.vc performSelector:@selector(tableView:cellForRowAtIndexPath:) withObject:self.vc.table withObject:indexPath];
-    }];
-    
-    [targetQueue waitUntilAllOperationsAreFinished];*/
-    
     PPRedditFeedCell *cell = nil;
     
     cell = [self.vc performSelector:@selector(tableView:cellForRowAtIndexPath:) withObject:self.vc.table withObject:indexPath];
