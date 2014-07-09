@@ -7,11 +7,14 @@
 //
 
 #import "PPAppDelegate.h"
+#import "PPAppearanceConfigurator.h"
 
 @implementation PPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[PPAppearanceConfigurator sharedInstance] configureAppearance];
+    
     // Override point for customization after application launch.
     return YES;
 }
