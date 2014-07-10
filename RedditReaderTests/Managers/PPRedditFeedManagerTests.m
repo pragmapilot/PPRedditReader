@@ -9,6 +9,9 @@
 #import <XCTest/XCTest.h>
 #import "PPRedditFeedManager.h"
 #import "PPTestMacros.h"
+#import "PPRedditFeed.h"
+#import "PPRedditComment.h"
+#import "PPUtils.h"
 
 @interface PPRedditFeedManagerTests : XCTestCase
 
@@ -49,5 +52,63 @@
     
     WaitUntilBlockCompletes();
 }
+
+- (void)testComments
+{
+   __block NSArray *feeds = nil;
+    
+    StartBlock();
+    
+    [self.manager defaultPageFeedsWithSuccessBlock:^(NSArray *feedsFromManager) {
+        EndBlock();
+        feeds = feedsFromManager;
+    } failureBlock: ^(NSError *error) {
+         EndBlock();
+     }];
+
+    
+    WaitUntilBlockCompletes();
+
+    __block PPRedditFeed *feedWithComments;
+    
+    [feeds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        PPRedditFeed *feed = (PPRedditFeed*) obj;
+
+        if(! IsEmpty(feed.permalink))
+        {
+            feedWithComments = feed;
+            *stop = YES;
+        }
+    }];
+    
+    RestartBlock();
+    
+    [self.manager commentsForSubRedditWithPermalink: feedWithComments.permalink
+                                       successBlock:^(NSArray *comments) {
+                                           EndBlock();
+                                           XCTAssertNotNil(comments, @"%s: comments array can't be nil on success!", __PRETTY_FUNCTION__);
+                                           XCTAssertTrue(comments.count > 0, @"%s: comments array can't be empty on success!", __PRETTY_FUNCTION__);
+                                       } failureBlock:^(NSError *error) {
+                                           EndBlock();
+                                           XCTAssertNotNil(error, @"%s: error can't be nil on failure!", __PRETTY_FUNCTION__);
+    }];
+    
+    WaitUntilBlockCompletes();
+    
+    RestartBlock();
+    
+    [self.manager commentsForSubRedditWithPermalink: @"thi://s.is/a/bad/url/to/test?failure&block"
+                                       successBlock:^(NSArray *comments) {
+                                           EndBlock();
+                                           XCTAssertNotNil(comments, @"%s: comments array can't be nil on success!", __PRETTY_FUNCTION__);
+                                           XCTAssertTrue(comments.count > 0, @"%s: comments array can't be empty on success!", __PRETTY_FUNCTION__);
+                                       } failureBlock:^(NSError *error) {
+                                           EndBlock();
+                                           XCTAssertNotNil(error, @"%s: error can't be nil on failure!", __PRETTY_FUNCTION__);
+                                       }];
+    
+    WaitUntilBlockCompletes();
+}
+
 
 @end

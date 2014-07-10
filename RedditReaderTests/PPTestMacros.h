@@ -12,6 +12,9 @@
 // Set the flag for a block completion handler
 #define StartBlock() __block BOOL waitingForBlock = YES
 
+// Set the flag for a block completion handler after it has been previously set
+#define RestartBlock() waitingForBlock = YES
+
 // Set the flag to stop the loop
 #define EndBlock() waitingForBlock = NO
 

@@ -63,7 +63,7 @@ static NSInteger const numComments = baseInteger + 2;
     NSArray *subviews = self.vc.view.subviews;
     XCTAssertTrue([subviews containsObject:self.vc.table], @"View does not have a table subview");
     XCTAssertTrue([subviews containsObject:self.vc.activityIndicator], @"View does not have an activity indicator subview");
-    XCTAssertTrue([subviews containsObject:self.vc.loadingDataLabel], @"View does not have a loading data label subview");
+    XCTAssertTrue([subviews containsObject:self.vc.loadingMessageLabel], @"View does not have a loading message label subview");
 }
 
 -(void)testThatTableViewLoads
