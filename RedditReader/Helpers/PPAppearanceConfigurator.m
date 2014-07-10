@@ -25,6 +25,8 @@
 {
     [[UINavigationBar appearance] setBarTintColor:[UIColor redditPaleBlue]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor darkGrayColor]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor darkGrayColor]];
+    
 }
 
 @end

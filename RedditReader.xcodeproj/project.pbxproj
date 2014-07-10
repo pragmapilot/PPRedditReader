@@ -16,6 +16,8 @@
 		FDAB0350196C141700783EAA /* PPRedditFeedManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB034F196C141700783EAA /* PPRedditFeedManagerTests.m */; };
 		FDC1D05F196B68F300249B13 /* PPRedditFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC1D05E196B68F300249B13 /* PPRedditFeed.m */; };
 		FDDDDAD3196D39DF00347498 /* PPRedditFeedListViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDDDAD2196D39DF00347498 /* PPRedditFeedListViewControllerTests.m */; };
+		FDDDDAD6196D567D00347498 /* PPSubRedditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDDDAD5196D567D00347498 /* PPSubRedditViewController.m */; };
+		FDDDDAD8196D971000347498 /* PPSubRedditViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDDDAD7196D971000347498 /* PPSubRedditViewControllerTests.m */; };
 		FDEA934B196AE76800727A94 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDEA934A196AE76800727A94 /* Foundation.framework */; };
 		FDEA934D196AE76800727A94 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDEA934C196AE76800727A94 /* CoreGraphics.framework */; };
 		FDEA934F196AE76800727A94 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDEA934E196AE76800727A94 /* UIKit.framework */; };
@@ -64,6 +66,9 @@
 		FDC1D05D196B68F300249B13 /* PPRedditFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPRedditFeed.h; path = DataObjects/PPRedditFeed.h; sourceTree = "<group>"; };
 		FDC1D05E196B68F300249B13 /* PPRedditFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPRedditFeed.m; path = DataObjects/PPRedditFeed.m; sourceTree = "<group>"; };
 		FDDDDAD2196D39DF00347498 /* PPRedditFeedListViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPRedditFeedListViewControllerTests.m; path = ViewControllers/PPRedditFeedListViewControllerTests.m; sourceTree = "<group>"; };
+		FDDDDAD4196D567D00347498 /* PPSubRedditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPSubRedditViewController.h; path = ViewControllers/PPSubRedditViewController.h; sourceTree = "<group>"; };
+		FDDDDAD5196D567D00347498 /* PPSubRedditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPSubRedditViewController.m; path = ViewControllers/PPSubRedditViewController.m; sourceTree = "<group>"; };
+		FDDDDAD7196D971000347498 /* PPSubRedditViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPSubRedditViewControllerTests.m; path = ViewControllers/PPSubRedditViewControllerTests.m; sourceTree = "<group>"; };
 		FDEA9347196AE76800727A94 /* RedditReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedditReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDEA934A196AE76800727A94 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FDEA934C196AE76800727A94 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -146,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				FDDDDAD2196D39DF00347498 /* PPRedditFeedListViewControllerTests.m */,
+				FDDDDAD7196D971000347498 /* PPSubRedditViewControllerTests.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -281,6 +287,8 @@
 			children = (
 				FDEA9384196AEA9300727A94 /* PPRedditFeedListViewController.h */,
 				FDEA9385196AEA9300727A94 /* PPRedditFeedListViewController.m */,
+				FDDDDAD4196D567D00347498 /* PPSubRedditViewController.h */,
+				FDDDDAD5196D567D00347498 /* PPSubRedditViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -440,6 +448,7 @@
 				FDAB0348196BE7FC00783EAA /* PPViewFactory.m in Sources */,
 				FDEA9357196AE76800727A94 /* main.m in Sources */,
 				FDF20196196B478700347A45 /* PPRedditFeedManager.m in Sources */,
+				FDDDDAD6196D567D00347498 /* PPSubRedditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +458,7 @@
 			files = (
 				FDEA9376196AE76800727A94 /* RedditReaderTests.m in Sources */,
 				FDAB0350196C141700783EAA /* PPRedditFeedManagerTests.m in Sources */,
+				FDDDDAD8196D971000347498 /* PPSubRedditViewControllerTests.m in Sources */,
 				FDDDDAD3196D39DF00347498 /* PPRedditFeedListViewControllerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

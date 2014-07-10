@@ -32,11 +32,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RedditFeedCell" id="7wh-aE-dCe" customClass="PPRedditFeedCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RedditFeedCell" id="7wh-aE-dCe" customClass="PPRedditFeedCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="104"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7wh-aE-dCe" id="XOj-Jm-Znd">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="103"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="103"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoadingImage" translatesAutoresizingMaskIntoConstraints="NO" id="DOJ-Jr-xRp">
@@ -47,8 +47,8 @@
                                                         <constraint firstAttribute="width" constant="88" id="lOQ-lG-fok"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="212" translatesAutoresizingMaskIntoConstraints="NO" id="hOh-e0-o0q" userLabel="title">
-                                                    <rect key="frame" x="104" y="4" width="212" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="179" translatesAutoresizingMaskIntoConstraints="NO" id="hOh-e0-o0q" userLabel="title">
+                                                    <rect key="frame" x="104" y="4" width="179" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="44" id="naL-WO-jhj"/>
@@ -102,6 +102,7 @@
                                             <outlet property="thumbnailImageViewWidthLayoutConstraint" destination="lOQ-lG-fok" id="sBI-UC-USe"/>
                                             <outlet property="titleLabel" destination="hOh-e0-o0q" id="u9I-H4-atq"/>
                                             <outlet property="upvotesLabel" destination="Lpj-CU-OIX" id="hOu-bF-GCu"/>
+                                            <segue destination="s0U-re-juZ" kind="push" identifier="feedListToSubRedditSegue" id="omC-ly-bLP"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -133,6 +134,98 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="606" y="4"/>
+        </scene>
+        <!--Sub Reddit View Controller - SubReddit-->
+        <scene sceneID="0jh-bA-aPr">
+            <objects>
+                <viewController storyboardIdentifier="SubRedditViewController" title="SubReddit" id="s0U-re-juZ" customClass="PPSubRedditViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9iy-uL-dZM"/>
+                        <viewControllerLayoutGuide type="bottom" id="has-rR-Xiu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PGF-1V-xS3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="znR-N4-bJH">
+                                <rect key="frame" x="150" y="274" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading data..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZgE-GV-dZB" userLabel="loadingMessageLabel">
+                                <rect key="frame" x="112" y="300" width="97" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <webView hidden="YES" contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JLh-1Y-YNe">
+                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="s0U-re-juZ" id="bMM-ZZ-7Y8"/>
+                                </connections>
+                            </webView>
+                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLs-od-8hK">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="&lt;" id="eyN-L4-BdI">
+                                        <connections>
+                                            <action selector="goBack" destination="JLh-1Y-YNe" id="18r-fs-sOc"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="d6c-Hz-Hdv"/>
+                                    <barButtonItem title=">" id="F3j-TN-kdx">
+                                        <connections>
+                                            <action selector="goForward" destination="JLh-1Y-YNe" id="sJr-bx-Kl2"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Cdf-Eb-ecN"/>
+                                    <barButtonItem title="↺" id="ife-hX-5GK">
+                                        <connections>
+                                            <action selector="reload" destination="JLh-1Y-YNe" id="25M-ps-TJK"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="DWq-Wq-1ix"/>
+                                    <barButtonItem title="x" id="a6P-v1-atg">
+                                        <connections>
+                                            <action selector="stopLoading" destination="JLh-1Y-YNe" id="ISZ-if-suX"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fLs-od-8hK" firstAttribute="leading" secondItem="PGF-1V-xS3" secondAttribute="leading" id="4SY-YK-i0f"/>
+                            <constraint firstAttribute="centerY" secondItem="znR-N4-bJH" secondAttribute="centerY" id="6H5-kA-EcM"/>
+                            <constraint firstAttribute="trailing" secondItem="JLh-1Y-YNe" secondAttribute="trailing" id="Htp-uy-S6r"/>
+                            <constraint firstAttribute="trailing" secondItem="fLs-od-8hK" secondAttribute="trailing" id="IQn-t4-81u"/>
+                            <constraint firstItem="ZgE-GV-dZB" firstAttribute="centerX" secondItem="znR-N4-bJH" secondAttribute="centerX" id="YQ9-87-mTv"/>
+                            <constraint firstItem="JLh-1Y-YNe" firstAttribute="leading" secondItem="PGF-1V-xS3" secondAttribute="leading" id="bIo-5h-ZXD"/>
+                            <constraint firstItem="fLs-od-8hK" firstAttribute="top" secondItem="JLh-1Y-YNe" secondAttribute="bottom" id="jEc-88-1tA"/>
+                            <constraint firstAttribute="centerX" secondItem="znR-N4-bJH" secondAttribute="centerX" id="lwQ-MP-5iM"/>
+                            <constraint firstItem="ZgE-GV-dZB" firstAttribute="centerY" secondItem="znR-N4-bJH" secondAttribute="centerY" constant="24" id="mO5-4f-noh"/>
+                            <constraint firstItem="JLh-1Y-YNe" firstAttribute="top" secondItem="PGF-1V-xS3" secondAttribute="top" constant="64" id="qGE-Nh-blF"/>
+                            <constraint firstItem="has-rR-Xiu" firstAttribute="top" secondItem="fLs-od-8hK" secondAttribute="bottom" id="v2Z-Kv-3FH"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="SubReddit" id="Ukn-Mt-LhD"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="znR-N4-bJH" id="zu9-dM-5Zu"/>
+                        <outlet property="backButton" destination="eyN-L4-BdI" id="2uK-s6-5P1"/>
+                        <outlet property="forwardButton" destination="F3j-TN-kdx" id="vJm-DD-K6n"/>
+                        <outlet property="loadingMessageLabel" destination="ZgE-GV-dZB" id="Efa-Nf-aLO"/>
+                        <outlet property="refreshButton" destination="ife-hX-5GK" id="b05-Am-Vwa"/>
+                        <outlet property="stopLoadingButton" destination="a6P-v1-atg" id="gjn-1E-kaJ"/>
+                        <outlet property="toolBar" destination="fLs-od-8hK" id="vlG-5D-emX"/>
+                        <outlet property="webView" destination="JLh-1Y-YNe" id="CwZ-MQ-7yT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kHI-aJ-rLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1048" y="4"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="w4G-gl-tFr">
