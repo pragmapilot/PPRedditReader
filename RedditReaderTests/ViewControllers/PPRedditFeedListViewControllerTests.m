@@ -105,7 +105,7 @@ static NSInteger const numComments = baseInteger + 2;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     PPRedditFeedCell *cell = [self cellForIndexPath:indexPath];
    
-    NSString *expectedReuseIdentifier = @"RedditFeedCell";
+    NSString *expectedReuseIdentifier = ppRedditFeedCellIdentifier;
     XCTAssertTrue([cell.reuseIdentifier isEqualToString:expectedReuseIdentifier], @"Table does not create reusable cells");
 }
 

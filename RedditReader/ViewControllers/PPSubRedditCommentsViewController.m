@@ -44,10 +44,7 @@
 	// Do any additional setup after loading the view.
     
     [self setNavigationBar];
-    
-    self.treeview.dataSource = self;
-    self.treeview.delegate = self;
-    [self.treeview registerNib:[UINib nibWithNibName:@"PPSubRedditCommentCell" bundle:nil] forCellReuseIdentifier:ppSubRedditCommentCellIdentifier];
+    [self setTreeView];
     
     [self.redditFeedManager commentsForSubRedditWithPermalink:self.feed.permalink
                                                  successBlock: ^(NSArray* comments){
@@ -71,7 +68,6 @@
 #pragma message "TODO: Retry button!!!"
         
     }];
-
 }
 
 #pragma mark - RATreeViewDataSource
@@ -119,6 +115,15 @@
     
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(closeButtonTapped:)];
     self.navigationItem.rightBarButtonItems = @[closeButton];
+}
+
+-(void)setTreeView
+{
+    self.treeview.dataSource = self;
+    self.treeview.delegate = self;
+    [self.treeview registerNib:[UINib nibWithNibName:@"PPSubRedditCommentCell" bundle:nil] forCellReuseIdentifier:ppSubRedditCommentCellIdentifier];
+    self.treeview.rowHeight = ppSubRedditCommentCellHeight;
+
 }
 
 @end
