@@ -10,6 +10,9 @@
 
 @interface PPViewFactory : NSObject
 
-+ (UIImage*)redditFeedCellPlaceholderImage;
++(UIImage*)redditFeedCellPlaceholderImage;
+
++(UILabel*)twoLineNavigationBarTitleWithFrame: (CGRect)frame text:(NSString*)text;
++(UIBarButtonItem*)rightSpacerNavigationBarAligner;
 
 @end

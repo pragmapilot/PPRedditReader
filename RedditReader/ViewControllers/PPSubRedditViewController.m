@@ -8,6 +8,7 @@
 
 #import "PPSubRedditViewController.h"
 #import "PPRedditFeed.h"
+#import "PPViewFactory.h"
 
 @interface PPSubRedditViewController () <UIWebViewDelegate>
 
@@ -20,6 +21,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+  
+    [self setNavigationBarTitle];
     
     NSURL *url = [NSURL URLWithString:self.feed.url];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
@@ -81,6 +84,16 @@
     self.toolBar.hidden = NO;
     self.refreshButton.enabled = YES;
     self.stopLoadingButton.enabled = NO;
+}
+
+#pragma mark - Private methods
+
+-(void)setNavigationBarTitle
+{
+    CGRect titleFrame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.navigationController.navigationBar.bounds));
+    self.navigationItem.titleView = [PPViewFactory twoLineNavigationBarTitleWithFrame:titleFrame text:self.feed.title];
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:[PPViewFactory rightSpacerNavigationBarAligner]];
 }
 
 @end

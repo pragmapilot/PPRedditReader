@@ -175,19 +175,19 @@
                                             <action selector="goBack" destination="JLh-1Y-YNe" id="18r-fs-sOc"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="dGE-Vm-emi"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="d6c-Hz-Hdv"/>
                                     <barButtonItem title=">" id="F3j-TN-kdx">
                                         <connections>
                                             <action selector="goForward" destination="JLh-1Y-YNe" id="sJr-bx-Kl2"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Lkx-23-m6C"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Cdf-Eb-ecN"/>
                                     <barButtonItem title="↺" id="ife-hX-5GK">
                                         <connections>
                                             <action selector="reload" destination="JLh-1Y-YNe" id="25M-ps-TJK"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="qRd-99-mQD"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="DWq-Wq-1ix"/>
                                     <barButtonItem title="x" id="a6P-v1-atg">
                                         <connections>
                                             <action selector="stopLoading" destination="JLh-1Y-YNe" id="ISZ-if-suX"/>
