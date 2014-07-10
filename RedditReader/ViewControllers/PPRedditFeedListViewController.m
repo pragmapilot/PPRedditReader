@@ -12,6 +12,7 @@
 #import "PPRedditFeedCell+DataBind.h"
 #import "PPSubRedditViewController.h"
 #import "PPRedditFeed.h"
+#import "PPSubRedditCommentsViewController.h"
 
 @interface PPRedditFeedListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -65,19 +66,31 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    // Hide back button title...cool one! :-)
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:nil
+                                                                            action:nil];
+    
     if([segue.identifier isEqualToString:@"feedListToSubRedditSegue"])
     {
-        // Hide back button title...cool one! :-)
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
-                                                                               style:UIBarButtonItemStylePlain
-                                                                              target:nil
-                                                                              action:nil];
-
         NSIndexPath *indexPathOfSelectedRow = [self.table indexPathForSelectedRow];
         PPRedditFeed *subReddit = self.redditPosts[indexPathOfSelectedRow.row];
         
-        PPSubRedditViewController *destinationVC = segue.destinationViewController;
-        destinationVC.feed = subReddit;
+        PPSubRedditViewController *destinationViewController = segue.destinationViewController;
+        destinationViewController.feed = subReddit;
+    }
+    else if ([segue.identifier isEqualToString:@"subRedditFeedListToCommentsSegue"])
+    {
+        UIButton *button = (UIButton*)sender;
+        
+        CGPoint touchPoint = [button.superview convertPoint:button.center toView:self.table];
+        NSIndexPath *indexPathOfSelectedRow = [self.table indexPathForRowAtPoint:touchPoint];
+        
+        PPRedditFeed *subReddit = self.redditPosts[indexPathOfSelectedRow.row];
+        
+        PPSubRedditCommentsViewController *commentsViewController = (PPSubRedditCommentsViewController *)((UINavigationController*)segue.destinationViewController).topViewController;
+        commentsViewController.feed = subReddit;
     }
 }
 

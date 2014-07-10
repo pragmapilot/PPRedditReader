@@ -71,23 +71,37 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="y comments" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hX-ZC-y5H" userLabel="comments">
-                                                    <rect key="frame" x="104" y="55" width="86" height="18"/>
+                                                    <rect key="frame" x="104" y="55" width="86" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Qw-c8-L3z" userLabel="commentsButton">
+                                                    <rect key="frame" x="104" y="55" width="86" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="Z0E-l1-o1W" kind="modal" identifier="subRedditFeedListToCommentsSegue" id="B7r-84-0Rt"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="DOJ-Jr-xRp" firstAttribute="leading" secondItem="XOj-Jm-Znd" secondAttribute="leading" constant="8" id="6xR-ut-JfC"/>
+                                                <constraint firstItem="2Qw-c8-L3z" firstAttribute="trailing" secondItem="7hX-ZC-y5H" secondAttribute="trailing" id="Bbs-4j-xF5"/>
                                                 <constraint firstAttribute="trailing" secondItem="hOh-e0-o0q" secondAttribute="trailing" constant="4" id="Cml-4r-JYN"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Lpj-CU-OIX" secondAttribute="trailing" constant="4" id="IIG-hd-mHQ"/>
                                                 <constraint firstItem="DOJ-Jr-xRp" firstAttribute="top" secondItem="XOj-Jm-Znd" secondAttribute="top" constant="8" id="Icw-na-IcI"/>
                                                 <constraint firstItem="7hX-ZC-y5H" firstAttribute="leading" secondItem="hOh-e0-o0q" secondAttribute="leading" id="Ll6-1T-DI6"/>
                                                 <constraint firstItem="hOh-e0-o0q" firstAttribute="leading" secondItem="DOJ-Jr-xRp" secondAttribute="trailing" constant="8" id="LvQ-K5-CwA"/>
+                                                <constraint firstItem="2Qw-c8-L3z" firstAttribute="leading" secondItem="7hX-ZC-y5H" secondAttribute="leading" id="QHq-tk-3lA"/>
+                                                <constraint firstItem="2Qw-c8-L3z" firstAttribute="top" secondItem="7hX-ZC-y5H" secondAttribute="top" id="Ud4-n8-cY5"/>
                                                 <constraint firstItem="0N1-0H-wt3" firstAttribute="top" secondItem="hOh-e0-o0q" secondAttribute="bottom" id="X5m-c7-GbW"/>
                                                 <constraint firstItem="Lpj-CU-OIX" firstAttribute="leading" secondItem="hOh-e0-o0q" secondAttribute="leading" id="XB4-KO-GHs"/>
                                                 <constraint firstItem="Lpj-CU-OIX" firstAttribute="top" secondItem="0N1-0H-wt3" secondAttribute="bottom" id="ZVg-Bp-4Q1"/>
+                                                <constraint firstItem="2Qw-c8-L3z" firstAttribute="bottom" secondItem="7hX-ZC-y5H" secondAttribute="bottom" id="aZH-hQ-SJz"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7hX-ZC-y5H" secondAttribute="trailing" constant="4" id="gTW-eF-Txg"/>
                                                 <constraint firstItem="0N1-0H-wt3" firstAttribute="leading" secondItem="hOh-e0-o0q" secondAttribute="leading" id="gac-5J-24h"/>
                                                 <constraint firstItem="hOh-e0-o0q" firstAttribute="top" secondItem="XOj-Jm-Znd" secondAttribute="top" constant="4" id="l6V-Oz-8ad"/>
@@ -193,6 +207,12 @@
                                             <action selector="stopLoading" destination="JLh-1Y-YNe" id="ISZ-if-suX"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Srh-Ag-MzN"/>
+                                    <barButtonItem title="☰" id="Gaw-se-eh8">
+                                        <connections>
+                                            <segue destination="Z0E-l1-o1W" kind="modal" identifier="subRedditToCommentsSegue" id="D3O-VP-WlW"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -215,6 +235,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="znR-N4-bJH" id="zu9-dM-5Zu"/>
                         <outlet property="backButton" destination="eyN-L4-BdI" id="2uK-s6-5P1"/>
+                        <outlet property="commentsButton" destination="Gaw-se-eh8" id="1zS-VP-Acr"/>
                         <outlet property="forwardButton" destination="F3j-TN-kdx" id="vJm-DD-K6n"/>
                         <outlet property="loadingMessageLabel" destination="ZgE-GV-dZB" id="Efa-Nf-aLO"/>
                         <outlet property="refreshButton" destination="ife-hX-5GK" id="b05-Am-Vwa"/>
@@ -225,7 +246,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kHI-aJ-rLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1048" y="4"/>
+            <point key="canvasLocation" x="1104" y="260"/>
+        </scene>
+        <!--Sub Reddit Comments View Controller - SubRedditComments-->
+        <scene sceneID="f39-KK-6cZ">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lMI-rO-npg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="SubRedditCommentsViewController" id="2ff-QM-ugk" customClass="PPSubRedditCommentsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="csv-BO-n65"/>
+                        <viewControllerLayoutGuide type="bottom" id="APD-1C-fbh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="POa-oh-VU3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="SubRedditComments" id="kCt-3t-XgO"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="2077" y="-364"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="w4G-gl-tFr">
@@ -245,6 +285,24 @@
             </objects>
             <point key="canvasLocation" x="23" y="4"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="WSg-Rp-xjw">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Z0E-l1-o1W" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S19-7J-vVT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2ff-QM-ugk" kind="relationship" relationship="rootViewController" id="pqb-M2-New"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tnI-ON-DZe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1551" y="-364"/>
+        </scene>
     </scenes>
     <resources>
         <image name="LoadingImage" width="128" height="128"/>
@@ -254,4 +312,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="D3O-VP-WlW"/>
+    </inferredMetricsTieBreakers>
 </document>

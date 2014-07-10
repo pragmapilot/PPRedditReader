@@ -22,5 +22,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *forwardButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *stopLoadingButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *commentsButton;
 
 @end
