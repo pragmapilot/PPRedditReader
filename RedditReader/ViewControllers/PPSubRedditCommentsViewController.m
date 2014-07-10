@@ -11,6 +11,9 @@
 #import "UIViewController+TwoLineNavBarTitle.h"
 #import "PPRedditFeedManager.h"
 #import <RATreeView/RATreeView.h>
+#import "PPRedditComment.h"
+#import "PPSubRedditCommentCell.h"
+#import "PPSubRedditCommentCell+DataBind.h"
 
 @interface PPSubRedditCommentsViewController () <RATreeViewDataSource, RATreeViewDelegate>
 
@@ -42,6 +45,10 @@
     
     [self setNavigationBar];
     
+    self.treeview.dataSource = self;
+    self.treeview.delegate = self;
+    [self.treeview registerNib:[UINib nibWithNibName:@"PPSubRedditCommentCell" bundle:nil] forCellReuseIdentifier:ppSubRedditCommentCellIdentifier];
+    
     [self.redditFeedManager commentsForSubRedditWithPermalink:self.feed.permalink
                                                  successBlock: ^(NSArray* comments){
         
@@ -51,8 +58,8 @@
         self.activityIndicator.hidden = YES;
         [self.activityIndicator stopAnimating];
         
-       // self.treeview.hidden = NO;
-       // [self.treeview reloadData];
+        self.treeview.hidden = NO;
+        [self.treeview reloadData];
         
     } failureBlock:^(NSError *error) {
         
@@ -61,7 +68,7 @@
         
         self.loadingMessageLabel.text = @"Could not load data...";
         
-        // TODO: Retry button!!!
+#pragma message "TODO: Retry button!!!"
         
     }];
 
@@ -69,7 +76,33 @@
 
 #pragma mark - RATreeViewDataSource
 
+- (NSInteger)treeView:(RATreeView*)treeView numberOfChildrenOfItem:(id)item
+{
+    return item ? ((PPRedditComment*)item).replies.count : self.redditComments.count;
+}
+
+- (UITableViewCell *)treeView:(RATreeView *)treeView cellForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+{
+    NSInteger numberOfChildren = [treeNodeInfo.children count];
+    
+    PPSubRedditCommentCell *cell = [treeView dequeueReusableCellWithIdentifier:ppSubRedditCommentCellIdentifier];
+    
+    [cell dataBindWithSubRedditComment:(PPRedditComment *)item];
+    
+    return cell;
+}
+
+-(id)treeView:(RATreeView *)treeView child:(NSInteger)index ofItem:(id)item
+{
+    return item ? ((PPRedditComment*)item).replies[index] : [self.redditComments objectAtIndex:index];
+}
+
 #pragma mark - RATreeViewDelegate
+
+-(CGFloat)treeView:(RATreeView *)treeView heightForRowForItem:(id)item treeNodeInfo:(RATreeNodeInfo *)treeNodeInfo
+{
+    return ppSubRedditCommentCellHeight;
+}
 
 #pragma mark - Handlers
 

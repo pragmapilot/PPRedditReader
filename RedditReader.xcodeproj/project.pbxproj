@@ -18,6 +18,9 @@
 		FDAB559E196E8934006FC42D /* UIViewController+TwoLineNavBarTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB559D196E8933006FC42D /* UIViewController+TwoLineNavBarTitle.m */; };
 		FDAB55A1196EAB87006FC42D /* PPBaseRedditDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB55A0196EAB87006FC42D /* PPBaseRedditDataObject.m */; };
 		FDAB55A4196EAC37006FC42D /* PPRedditComment.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB55A3196EAC37006FC42D /* PPRedditComment.m */; };
+		FDAB55A7196EFEBD006FC42D /* PPSubRedditCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB55A6196EFEBD006FC42D /* PPSubRedditCommentCell.m */; };
+		FDAB55A9196EFEFD006FC42D /* PPSubRedditCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDAB55A8196EFEFD006FC42D /* PPSubRedditCommentCell.xib */; };
+		FDAB55AC196F0709006FC42D /* PPSubRedditCommentCell+DataBind.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB55AB196F0709006FC42D /* PPSubRedditCommentCell+DataBind.m */; };
 		FDC1D05F196B68F300249B13 /* PPRedditFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC1D05E196B68F300249B13 /* PPRedditFeed.m */; };
 		FDDDDAD3196D39DF00347498 /* PPRedditFeedListViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDDDAD2196D39DF00347498 /* PPRedditFeedListViewControllerTests.m */; };
 		FDDDDAD6196D567D00347498 /* PPSubRedditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDDDAD5196D567D00347498 /* PPSubRedditViewController.m */; };
@@ -75,6 +78,11 @@
 		FDAB55A0196EAB87006FC42D /* PPBaseRedditDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPBaseRedditDataObject.m; path = DataObjects/PPBaseRedditDataObject.m; sourceTree = "<group>"; };
 		FDAB55A2196EAC37006FC42D /* PPRedditComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPRedditComment.h; path = DataObjects/PPRedditComment.h; sourceTree = "<group>"; };
 		FDAB55A3196EAC37006FC42D /* PPRedditComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPRedditComment.m; path = DataObjects/PPRedditComment.m; sourceTree = "<group>"; };
+		FDAB55A5196EFEBD006FC42D /* PPSubRedditCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPSubRedditCommentCell.h; path = Views/Cells/PPSubRedditCommentCell.h; sourceTree = "<group>"; };
+		FDAB55A6196EFEBD006FC42D /* PPSubRedditCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPSubRedditCommentCell.m; path = Views/Cells/PPSubRedditCommentCell.m; sourceTree = "<group>"; };
+		FDAB55A8196EFEFD006FC42D /* PPSubRedditCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PPSubRedditCommentCell.xib; path = Views/Cells/PPSubRedditCommentCell.xib; sourceTree = "<group>"; };
+		FDAB55AA196F0709006FC42D /* PPSubRedditCommentCell+DataBind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PPSubRedditCommentCell+DataBind.h"; path = "Categories/CellDataBinding/PPSubRedditCommentCell+DataBind.h"; sourceTree = "<group>"; };
+		FDAB55AB196F0709006FC42D /* PPSubRedditCommentCell+DataBind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PPSubRedditCommentCell+DataBind.m"; path = "Categories/CellDataBinding/PPSubRedditCommentCell+DataBind.m"; sourceTree = "<group>"; };
 		FDC1D05D196B68F300249B13 /* PPRedditFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPRedditFeed.h; path = DataObjects/PPRedditFeed.h; sourceTree = "<group>"; };
 		FDC1D05E196B68F300249B13 /* PPRedditFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPRedditFeed.m; path = DataObjects/PPRedditFeed.m; sourceTree = "<group>"; };
 		FDDDDAD2196D39DF00347498 /* PPRedditFeedListViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPRedditFeedListViewControllerTests.m; path = ViewControllers/PPRedditFeedListViewControllerTests.m; sourceTree = "<group>"; };
@@ -147,6 +155,9 @@
 			children = (
 				FDAB0340196BE59D00783EAA /* PPRedditFeedCell.h */,
 				FDAB0341196BE59D00783EAA /* PPRedditFeedCell.m */,
+				FDAB55A5196EFEBD006FC42D /* PPSubRedditCommentCell.h */,
+				FDAB55A6196EFEBD006FC42D /* PPSubRedditCommentCell.m */,
+				FDAB55A8196EFEFD006FC42D /* PPSubRedditCommentCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -268,6 +279,8 @@
 			children = (
 				FDAB0343196BE6DE00783EAA /* PPRedditFeedCell+DataBind.h */,
 				FDAB0344196BE6DE00783EAA /* PPRedditFeedCell+DataBind.m */,
+				FDAB55AA196F0709006FC42D /* PPSubRedditCommentCell+DataBind.h */,
+				FDAB55AB196F0709006FC42D /* PPSubRedditCommentCell+DataBind.m */,
 			);
 			name = CellDataBinding;
 			sourceTree = "<group>";
@@ -401,6 +414,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDAB55A9196EFEFD006FC42D /* PPSubRedditCommentCell.xib in Resources */,
 				FDEA9363196AE76800727A94 /* Images.xcassets in Resources */,
 				FDEA9355196AE76800727A94 /* InfoPlist.strings in Resources */,
 				FDEA935E196AE76800727A94 /* Main.storyboard in Resources */,
@@ -456,6 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDAB55A7196EFEBD006FC42D /* PPSubRedditCommentCell.m in Sources */,
 				FDAB0345196BE6DE00783EAA /* PPRedditFeedCell+DataBind.m in Sources */,
 				FDF20191196B03A500347A45 /* PPAppearanceConfigurator.m in Sources */,
 				FDAB034B196BEA1200783EAA /* PPUtils.m in Sources */,
@@ -465,6 +480,7 @@
 				FDEA9386196AEA9300727A94 /* PPRedditFeedListViewController.m in Sources */,
 				FDAB0342196BE59D00783EAA /* PPRedditFeedCell.m in Sources */,
 				FDEA935B196AE76800727A94 /* PPAppDelegate.m in Sources */,
+				FDAB55AC196F0709006FC42D /* PPSubRedditCommentCell+DataBind.m in Sources */,
 				FDAB55A4196EAC37006FC42D /* PPRedditComment.m in Sources */,
 				FDF2019E196B4B9200347A45 /* PPURLFactory.m in Sources */,
 				FDC1D05F196B68F300249B13 /* PPRedditFeed.m in Sources */,

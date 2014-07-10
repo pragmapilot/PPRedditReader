@@ -21,10 +21,32 @@
                                                   @"subreddit_id":    @"subredditId",
                                                   @"body":            @"body",
                                                   @"ups":             @"ups",
-                                                  @"replies":         @"replies"
                                                   }];
+
+    RKDynamicMapping *dynamicMapping = [RKDynamicMapping new];
+    [dynamicMapping setObjectMappingForRepresentationBlock:^RKObjectMapping *(id representation) {
+        
+#pragma message "DO SOMETHING ABOUT THIS..."
+        if([representation isKindOfClass:[NSDictionary class]])
+        {
+            NSDictionary *replies = (NSDictionary*)representation;
+            
+            NSArray *children = ((NSDictionary*)replies[@"data"])[@"children"];
+            NSDictionary *lastNode = children[children.count - 1];
+            
+            if([lastNode[@"kind"] isEqualToString:@"more"])
+                DLog(@"%@", representation);
+        }
+        
+        return nil;
+    }];
     
-    return mapping;
+
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"replies"
+                                                                            toKeyPath:@"replies"
+                                                                          withMapping:dynamicMapping]];
+    
+   return mapping;
 }
 
 

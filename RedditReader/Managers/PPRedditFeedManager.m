@@ -24,7 +24,7 @@
                                                                                        statusCodes:nil];
     
     [self executeRequestOperationWithURL:[PPURLFactory redditDefaultPageJSONFeedURLString]
-                      responseDescriptor:responseDescriptor
+                      responseDescriptors:@[responseDescriptor]
                             successBlock:successBlock
                             failureBlock:failureBlock];
 }
@@ -33,56 +33,55 @@
                             successBlock:(void(^)(NSArray* comments))successBlock
                             failureBlock:(void(^)(NSError* error))failureBlock
 {
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[PPRedditComment restKitMapping]
+    RKResponseDescriptor *commentResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[PPRedditComment restKitMapping]
                                                                                             method:RKRequestMethodAny
                                                                                        pathPattern:nil
-                                                                                           keyPath:@"data.children"
+                                                                                           keyPath:@"data"
                                                                                        statusCodes:nil];
-
+   
     [self executeRequestOperationWithURL:[PPURLFactory urlForSubredditCommentsJSONWithPermalink:permalink]
-                      responseDescriptor:responseDescriptor
+                      responseDescriptors:@[commentResponseDescriptor]
                             successBlock:successBlock
                             failureBlock:failureBlock
      willMapDeserializedResponseBlock:^id(id deserializedResponseBody) {
          
          id result = deserializedResponseBody;
          
-         // We want to ignore response's first item: it's subreddit info...
          if([deserializedResponseBody isKindOfClass:[NSArray class]])
          {
-             NSMutableArray *deserializedJSON = [NSMutableArray arrayWithArray:deserializedResponseBody];
-             [deserializedJSON removeObjectAtIndex:0];
-             
-             result = deserializedJSON;
+             // We want to ignore response's first item: it's subreddit info...
+             NSDictionary *secondNode = deserializedResponseBody[1];
+             NSDictionary *secondNodeData = secondNode[@"data"];
+             result = secondNodeData[@"children"];
          }
          
-         return result;
+         return [result copy];
      }];
 }
 
 #pragma mark - Private methods
 
 - (void)executeRequestOperationWithURL:(NSString*)urlString
-                    responseDescriptor:(RKResponseDescriptor*)responseDescriptor
+                    responseDescriptors:(NSArray*)responseDescriptors
                           successBlock:(void(^)(NSArray* items))successBlock
                           failureBlock:(void(^)(NSError* error))failureBlock
 {
     [self executeRequestOperationWithURL:urlString
-                      responseDescriptor:responseDescriptor
+                      responseDescriptors:responseDescriptors
                             successBlock:successBlock
                             failureBlock:failureBlock
         willMapDeserializedResponseBlock:nil];
 }
 
 - (void)executeRequestOperationWithURL:(NSString*)urlString
-                    responseDescriptor:(RKResponseDescriptor*)responseDescriptor
+                    responseDescriptors:(NSArray*)responseDescriptors
                           successBlock:(void(^)(NSArray* items))successBlock
                           failureBlock:(void(^)(NSError* error))failureBlock
       willMapDeserializedResponseBlock:(id(^)(id deserializedResponseBody))willMapDeserializedResponseBlock
 {
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[responseDescriptor]];
+    RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:responseDescriptors];
     [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         
         if(successBlock)
