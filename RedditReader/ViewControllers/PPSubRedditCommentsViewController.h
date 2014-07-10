@@ -9,9 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @class PPRedditFeed;
+@class RATreeView;
 
 @interface PPSubRedditCommentsViewController : UIViewController
 
 @property (nonatomic, strong) PPRedditFeed *feed;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *loadingMessageLabel;
+@property (weak, nonatomic) IBOutlet RATreeView *treeview;
 
 @end

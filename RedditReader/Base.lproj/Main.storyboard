@@ -20,7 +20,7 @@
                                 <rect key="frame" x="150" y="274" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading data..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEZ-rM-fTj" userLabel="loadingData">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading data..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEZ-rM-fTj" userLabel="loadingMessageLabel">
                                 <rect key="frame" x="112" y="300" width="97" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -142,7 +142,7 @@
                     <navigationItem key="navigationItem" title="RedditReader" id="Wci-nc-ftV"/>
                     <connections>
                         <outlet property="activityIndicator" destination="j4d-j2-cQO" id="QyT-zI-8aM"/>
-                        <outlet property="loadingDataLabel" destination="UEZ-rM-fTj" id="iw0-A1-ShG"/>
+                        <outlet property="loadingMessageLabel" destination="UEZ-rM-fTj" id="CKQ-8Q-GTM"/>
                         <outlet property="table" destination="pwd-vh-V2t" id="lYC-rs-IdJ"/>
                     </connections>
                 </viewController>
@@ -261,9 +261,42 @@
                     <view key="view" contentMode="scaleToFill" id="POa-oh-VU3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ik5-d4-8K7" userLabel="activityIndicator">
+                                <rect key="frame" x="150" y="274" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading data..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3DO-PF-in4" userLabel="loadingMessageLabel">
+                                <rect key="frame" x="112" y="300" width="97" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gnw-Jc-aVW" customClass="RATreeView">
+                                <rect key="frame" x="0.0" y="63" width="320" height="505"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Gnw-Jc-aVW" secondAttribute="trailing" id="Bff-HV-x6E"/>
+                            <constraint firstAttribute="centerY" secondItem="Ik5-d4-8K7" secondAttribute="centerY" id="MFq-z5-lM6"/>
+                            <constraint firstAttribute="bottom" secondItem="Gnw-Jc-aVW" secondAttribute="bottom" id="Xtf-Hq-uho"/>
+                            <constraint firstItem="Ik5-d4-8K7" firstAttribute="centerY" secondItem="3DO-PF-in4" secondAttribute="centerY" constant="-24" id="ZFu-ht-OYT"/>
+                            <constraint firstItem="Ik5-d4-8K7" firstAttribute="centerX" secondItem="3DO-PF-in4" secondAttribute="centerX" id="bqI-PJ-Ir9"/>
+                            <constraint firstItem="Gnw-Jc-aVW" firstAttribute="top" secondItem="POa-oh-VU3" secondAttribute="top" constant="63" id="eSW-WH-R2V"/>
+                            <constraint firstAttribute="centerX" secondItem="Ik5-d4-8K7" secondAttribute="centerX" id="i0c-aL-wmJ"/>
+                            <constraint firstItem="Gnw-Jc-aVW" firstAttribute="leading" secondItem="POa-oh-VU3" secondAttribute="leading" id="lVO-in-Lan"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="SubRedditComments" id="kCt-3t-XgO"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="Ik5-d4-8K7" id="Wrk-Wm-lev"/>
+                        <outlet property="loadingMessageLabel" destination="3DO-PF-in4" id="Q8x-yQ-ka1"/>
+                        <outlet property="treeview" destination="Gnw-Jc-aVW" id="6uz-AG-qT2"/>
+                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="2077" y="-364"/>

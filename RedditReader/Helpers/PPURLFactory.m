@@ -23,6 +23,11 @@ static NSString const * jsonExtension = @".json";
     return [NSString stringWithFormat:@"%@/%@", [PPURLFactory urlMappings][redditBaseURLKey], jsonExtension];
 }
 
++(NSString*)urlForSubredditCommentsJSONWithPermalink:(NSString*)permalink
+{
+    return [NSString stringWithFormat:@"%@%@%@", [PPURLFactory urlMappings][redditBaseURLKey],permalink, jsonExtension];
+}
+
 #pragma mark - Private methods
 
 +(NSDictionary*) urlMappings

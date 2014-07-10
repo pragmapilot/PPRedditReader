@@ -16,6 +16,8 @@
 		FDAB0350196C141700783EAA /* PPRedditFeedManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB034F196C141700783EAA /* PPRedditFeedManagerTests.m */; };
 		FDAB559B196E835D006FC42D /* PPSubRedditCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB559A196E835D006FC42D /* PPSubRedditCommentsViewController.m */; };
 		FDAB559E196E8934006FC42D /* UIViewController+TwoLineNavBarTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB559D196E8933006FC42D /* UIViewController+TwoLineNavBarTitle.m */; };
+		FDAB55A1196EAB87006FC42D /* PPBaseRedditDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB55A0196EAB87006FC42D /* PPBaseRedditDataObject.m */; };
+		FDAB55A4196EAC37006FC42D /* PPRedditComment.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB55A3196EAC37006FC42D /* PPRedditComment.m */; };
 		FDC1D05F196B68F300249B13 /* PPRedditFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = FDC1D05E196B68F300249B13 /* PPRedditFeed.m */; };
 		FDDDDAD3196D39DF00347498 /* PPRedditFeedListViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDDDAD2196D39DF00347498 /* PPRedditFeedListViewControllerTests.m */; };
 		FDDDDAD6196D567D00347498 /* PPSubRedditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDDDAD5196D567D00347498 /* PPSubRedditViewController.m */; };
@@ -69,6 +71,10 @@
 		FDAB559A196E835D006FC42D /* PPSubRedditCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPSubRedditCommentsViewController.m; path = ViewControllers/PPSubRedditCommentsViewController.m; sourceTree = "<group>"; };
 		FDAB559C196E8933006FC42D /* UIViewController+TwoLineNavBarTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+TwoLineNavBarTitle.h"; path = "Categories/UIViewController+TwoLineNavBarTitle.h"; sourceTree = "<group>"; };
 		FDAB559D196E8933006FC42D /* UIViewController+TwoLineNavBarTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+TwoLineNavBarTitle.m"; path = "Categories/UIViewController+TwoLineNavBarTitle.m"; sourceTree = "<group>"; };
+		FDAB559F196EAB87006FC42D /* PPBaseRedditDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPBaseRedditDataObject.h; path = DataObjects/PPBaseRedditDataObject.h; sourceTree = "<group>"; };
+		FDAB55A0196EAB87006FC42D /* PPBaseRedditDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPBaseRedditDataObject.m; path = DataObjects/PPBaseRedditDataObject.m; sourceTree = "<group>"; };
+		FDAB55A2196EAC37006FC42D /* PPRedditComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPRedditComment.h; path = DataObjects/PPRedditComment.h; sourceTree = "<group>"; };
+		FDAB55A3196EAC37006FC42D /* PPRedditComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPRedditComment.m; path = DataObjects/PPRedditComment.m; sourceTree = "<group>"; };
 		FDC1D05D196B68F300249B13 /* PPRedditFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPRedditFeed.h; path = DataObjects/PPRedditFeed.h; sourceTree = "<group>"; };
 		FDC1D05E196B68F300249B13 /* PPRedditFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPRedditFeed.m; path = DataObjects/PPRedditFeed.m; sourceTree = "<group>"; };
 		FDDDDAD2196D39DF00347498 /* PPRedditFeedListViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPRedditFeedListViewControllerTests.m; path = ViewControllers/PPRedditFeedListViewControllerTests.m; sourceTree = "<group>"; };
@@ -271,6 +277,10 @@
 			children = (
 				FDC1D05D196B68F300249B13 /* PPRedditFeed.h */,
 				FDC1D05E196B68F300249B13 /* PPRedditFeed.m */,
+				FDAB559F196EAB87006FC42D /* PPBaseRedditDataObject.h */,
+				FDAB55A0196EAB87006FC42D /* PPBaseRedditDataObject.m */,
+				FDAB55A2196EAC37006FC42D /* PPRedditComment.h */,
+				FDAB55A3196EAC37006FC42D /* PPRedditComment.m */,
 			);
 			name = DataObjects;
 			sourceTree = "<group>";
@@ -455,8 +465,10 @@
 				FDEA9386196AEA9300727A94 /* PPRedditFeedListViewController.m in Sources */,
 				FDAB0342196BE59D00783EAA /* PPRedditFeedCell.m in Sources */,
 				FDEA935B196AE76800727A94 /* PPAppDelegate.m in Sources */,
+				FDAB55A4196EAC37006FC42D /* PPRedditComment.m in Sources */,
 				FDF2019E196B4B9200347A45 /* PPURLFactory.m in Sources */,
 				FDC1D05F196B68F300249B13 /* PPRedditFeed.m in Sources */,
+				FDAB55A1196EAB87006FC42D /* PPBaseRedditDataObject.m in Sources */,
 				FDAB0348196BE7FC00783EAA /* PPViewFactory.m in Sources */,
 				FDEA9357196AE76800727A94 /* main.m in Sources */,
 				FDF20196196B478700347A45 /* PPRedditFeedManager.m in Sources */,

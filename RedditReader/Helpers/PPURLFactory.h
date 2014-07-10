@@ -10,6 +10,7 @@
 
 @interface PPURLFactory : NSObject
 
-+ (NSString*)redditDefaultPageJSONFeedURLString;
++(NSString*)redditDefaultPageJSONFeedURLString;
++(NSString*)urlForSubredditCommentsJSONWithPermalink:(NSString*)permalink;
 
 @end

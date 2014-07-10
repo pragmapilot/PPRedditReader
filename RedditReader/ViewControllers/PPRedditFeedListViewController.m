@@ -45,7 +45,7 @@
         
         self.redditPosts = [NSMutableArray arrayWithArray:feeds];
         
-        self.loadingDataLabel.hidden = YES;
+        self.loadingMessageLabel.hidden = YES;
         self.activityIndicator.hidden = YES;
         [self.activityIndicator stopAnimating];
         
@@ -57,7 +57,7 @@
         self.activityIndicator.hidden = YES;
         [self.activityIndicator stopAnimating];
         
-        self.loadingDataLabel.text = @"Could not load data...";
+        self.loadingMessageLabel.text = @"Could not load data...";
         
         // TODO: Retry button!!!
         

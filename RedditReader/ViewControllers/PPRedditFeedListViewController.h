@@ -11,7 +11,7 @@
 @interface PPRedditFeedListViewController : UIViewController
 
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, strong) IBOutlet UILabel *loadingDataLabel;
+@property (nonatomic, strong) IBOutlet UILabel *loadingMessageLabel;
 @property (nonatomic, strong) IBOutlet UITableView *table;
 
 @end
