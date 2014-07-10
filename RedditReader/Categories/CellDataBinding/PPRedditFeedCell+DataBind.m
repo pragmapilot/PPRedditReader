@@ -60,7 +60,10 @@
     if(redditFeed.numComments > 0)
     {
         self.commentsLabel.text = [NSString stringWithFormat:@"%d comments", redditFeed.numComments];
+        self.commentsButton.enabled = YES;
     }
+    else
+        self.commentsButton.enabled = NO;
 }
 
 #pragma mark - Private methods

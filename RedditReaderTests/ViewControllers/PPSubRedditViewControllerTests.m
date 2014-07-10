@@ -58,6 +58,7 @@
     XCTAssertNotNil(self.vc.forwardButton, @"Forward button not initiated");
     XCTAssertNotNil(self.vc.refreshButton, @"Refresh button not initiated");
     XCTAssertNotNil(self.vc.stopLoadingButton, @"Stop loading button not initiated");
+    XCTAssertNotNil(self.vc.commentsButton, @"Comments button not initiated");
 }
 
 #pragma mark - UIWebView tests

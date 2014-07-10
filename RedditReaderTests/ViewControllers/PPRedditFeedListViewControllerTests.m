@@ -130,6 +130,17 @@ static NSInteger const numComments = baseInteger + 2;
     NSString *expectedCommentsText = [NSString stringWithFormat:@"%d comments", self.feed.numComments];
     
     XCTAssertEqualObjects(cell.commentsLabel.text, expectedCommentsText, @"Got %@ for cell comments label text and should have gotten %@", cell.commentsLabel.text, expectedCommentsText);
+    
+    XCTAssertTrue(cell.commentsButton.enabled, @"Comments button must be enabled if there are comments.");
+    
+    // Test "No comments"
+    self.feed.numComments = 0;
+    [cell dataBindWithRedditFeed:self.feed];
+    
+    XCTAssertFalse(cell.commentsButton.enabled, @"Comments button must be disabled if there are no comments.");
+    
+    // Reset comments
+    self.feed.numComments = numComments;
 }
 
 #pragma mark - Helper methods

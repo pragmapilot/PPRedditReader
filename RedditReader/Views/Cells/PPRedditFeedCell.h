@@ -19,6 +19,7 @@ static NSString *ppRedditFeedCellIdentifier = @"RedditFeedCell";
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *upvotesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
+@property (weak, nonatomic) IBOutlet UIButton *commentsButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *thumbnailImageViewWidthLayoutConstraint;
 
