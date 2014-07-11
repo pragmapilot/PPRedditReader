@@ -8,19 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <RestKit/RestKit.h>
+#import "PPBaseRedditDataObject.h"
 
-@interface PPRedditFeed : NSObject
+@interface PPRedditFeed : PPBaseRedditDataObject
 
-@property (nonatomic, copy) NSString *author;
-@property (nonatomic, readwrite) NSInteger createdUTC;
 @property (nonatomic, readwrite) NSInteger numComments;
 @property (nonatomic, copy) NSString *permalink;
-@property (nonatomic, readwrite) NSInteger score;
-@property (nonatomic, copy) NSString *subreddit;
-@property (nonatomic, copy) NSString *subredditId;
 @property (nonatomic, copy) NSString *thumbnail;
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic, readwrite) NSInteger ups;
 @property (nonatomic, copy) NSString *url;
 
 + (RKObjectMapping*)restKitMapping;

@@ -9,6 +9,9 @@
 #import "PPSubRedditViewController.h"
 #import "PPRedditFeed.h"
 #import "PPViewFactory.h"
+#import "PPUtils.h"
+#import "PPSubRedditCommentsViewController.h"
+#import "UIViewController+TwoLineNavBarTitle.h"
 
 @interface PPSubRedditViewController () <UIWebViewDelegate>
 
@@ -22,7 +25,7 @@
 {
     [super viewDidLoad];
   
-    [self setNavigationBarTitle];
+    [self setTwoLineNavigationBarTitleWithText:self.feed.title];
     
     NSURL *url = [NSURL URLWithString:self.feed.url];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
@@ -36,6 +39,21 @@
     if(self.webView.loading)
     {
        [self.webView stopLoading];
+    }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"subRedditToCommentsSegue"])
+    {
+        // Hide back button title...cool one! :-)
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                                target:nil
+                                                                                action:nil];
+
+        PPSubRedditCommentsViewController *commentsViewController = (PPSubRedditCommentsViewController *) ((UINavigationController*)segue.destinationViewController).topViewController;
+        commentsViewController.feed = self.feed;
     }
 }
 
@@ -53,6 +71,7 @@
     self.forwardButton.enabled = NO;
     self.refreshButton.enabled = NO;
     self.stopLoadingButton.enabled = YES;
+    self.commentsButton.enabled = NO;
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
@@ -71,6 +90,9 @@
         self.forwardButton.enabled = YES;
     
     self.refreshButton.enabled = YES;
+    
+    if(! IsEmpty(self.feed.permalink))
+            self.commentsButton.enabled = YES;
 }
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -84,16 +106,7 @@
     self.toolBar.hidden = NO;
     self.refreshButton.enabled = YES;
     self.stopLoadingButton.enabled = NO;
-}
-
-#pragma mark - Private methods
-
--(void)setNavigationBarTitle
-{
-    CGRect titleFrame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.navigationController.navigationBar.bounds));
-    self.navigationItem.titleView = [PPViewFactory twoLineNavigationBarTitleWithFrame:titleFrame text:self.feed.title];
-    
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:[PPViewFactory rightSpacerNavigationBarAligner]];
+    self.commentsButton.enabled = NO;
 }
 
 @end

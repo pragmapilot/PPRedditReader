@@ -12,4 +12,6 @@
 
 - (void)defaultPageFeedsWithSuccessBlock:(void(^)(NSArray* feeds))successBlock failureBlock:(void(^)(NSError* error))failureBlock;
 
+-(void)commentsForSubRedditWithPermalink:(NSString*)permalink successBlock:(void(^)(NSArray* comments))successBlock failureBlock:(void(^)(NSError* error))failureBlock;
+
 @end

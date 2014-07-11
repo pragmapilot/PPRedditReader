@@ -23,7 +23,7 @@
     titleLabel.font = [UIFont boldSystemFontOfSize: 15.0f];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor darkGrayColor];
-    titleLabel.minimumScaleFactor = .5;
+    titleLabel.minimumScaleFactor = .7;
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.text = text;
     titleLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
