@@ -146,9 +146,6 @@
 -(void)setUpTable
 {
     self.table.tableFooterView = [[PPLoadMoreDataView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.table.bounds), ppLoadMoreDataViewHeight)];
-    
-    self.table.tableHeaderView = [[PPLoadMoreDataView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.table.bounds), ppLoadMoreDataViewHeight)];
-
 }
 
 /**
