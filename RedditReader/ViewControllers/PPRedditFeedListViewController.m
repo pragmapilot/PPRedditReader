@@ -15,6 +15,7 @@
 #import "PPRedditFeed.h"
 #import "PPSubRedditCommentsViewController.h"
 #import "PPUtils.h"
+#import "PPLoadMoreDataView.h"
 
 @interface PPRedditFeedListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -144,13 +145,10 @@
 
 -(void)setUpTable
 {
-#pragma message "TO TABLE SETUP MEHTOD"
-    UILabel *loadingView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.table.bounds), 60)];
-    loadingView.textColor = [UIColor blackColor];
-    loadingView.textAlignment = NSTextAlignmentCenter;
-    loadingView.text = @"Loading more data...";
-    loadingView.backgroundColor = [UIColor redColor];
-    self.table.tableFooterView = loadingView;
+    self.table.tableFooterView = [[PPLoadMoreDataView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.table.bounds), ppLoadMoreDataViewHeight)];
+    
+    self.table.tableHeaderView = [[PPLoadMoreDataView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.table.bounds), ppLoadMoreDataViewHeight)];
+
 }
 
 /**
