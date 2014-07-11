@@ -7,29 +7,37 @@
 //
 
 #import "PPRedditFeedManager.h"
-#import <RestKit/RestKit.h>
-#import "PPRedditFeed.h"
+#import "PPRedditFeedCollection.h"
 #import "PPRedditComment.h"
 #import "PPURLFactory.h"
 
 @implementation PPRedditFeedManager
 
-- (void)defaultPageFeedsWithSuccessBlock:(void(^)(NSArray* feeds))successBlock
-                            failureBlock:(void(^)(NSError* error))failureBlock
+- (RKObjectRequestOperation*)defaultPageFeedsAfter: (NSString*)after
+                 successBlock:(void(^)(PPRedditFeedCollection* feedColletion))successBlock
+                 failureBlock:(void(^)(NSError* error))failureBlock
 {
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[PPRedditFeed restKitMapping]
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[PPRedditFeedCollection restKitMapping]
                                                                                             method:RKRequestMethodAny
                                                                                        pathPattern:nil
-                                                                                           keyPath:@"data.children.data"
+                                                                                           keyPath:@"data"
                                                                                        statusCodes:nil];
     
-    [self executeRequestOperationWithURL:[PPURLFactory redditDefaultPageJSONFeedURLString]
+    void (^internalSuccessBlock)(NSArray* feeds) = ^void(NSArray* feeds)
+    {
+        if(feeds && [feeds.firstObject isKindOfClass:[PPRedditFeedCollection class]] && successBlock)
+        {
+            successBlock(feeds.firstObject);
+        }
+    };
+
+    return [self executeRequestOperationWithURL:[PPURLFactory redditDefaultPageJSONFeedURLStringAfter:after]
                       responseDescriptors:@[responseDescriptor]
-                            successBlock:successBlock
+                            successBlock:internalSuccessBlock
                             failureBlock:failureBlock];
 }
 
--(void)commentsForSubRedditWithPermalink:(NSString*)permalink
+-(RKObjectRequestOperation*)commentsForSubRedditWithPermalink:(NSString*)permalink
                             successBlock:(void(^)(NSArray* comments))successBlock
                             failureBlock:(void(^)(NSError* error))failureBlock
 {
@@ -39,7 +47,7 @@
                                                                                            keyPath:@"data"
                                                                                        statusCodes:nil];
    
-    [self executeRequestOperationWithURL:[PPURLFactory urlForSubredditCommentsJSONWithPermalink:permalink]
+   return [self executeRequestOperationWithURL:[PPURLFactory urlForSubredditCommentsJSONWithPermalink:permalink]
                       responseDescriptors:@[commentResponseDescriptor]
                             successBlock:successBlock
                             failureBlock:failureBlock
@@ -61,19 +69,19 @@
 
 #pragma mark - Private methods
 
-- (void)executeRequestOperationWithURL:(NSString*)urlString
+- (RKObjectRequestOperation*)executeRequestOperationWithURL:(NSString*)urlString
                     responseDescriptors:(NSArray*)responseDescriptors
                           successBlock:(void(^)(NSArray* items))successBlock
                           failureBlock:(void(^)(NSError* error))failureBlock
 {
-    [self executeRequestOperationWithURL:urlString
+   return [self executeRequestOperationWithURL:urlString
                       responseDescriptors:responseDescriptors
                             successBlock:successBlock
                             failureBlock:failureBlock
         willMapDeserializedResponseBlock:nil];
 }
 
-- (void)executeRequestOperationWithURL:(NSString*)urlString
+- (RKObjectRequestOperation*)executeRequestOperationWithURL:(NSString*)urlString
                     responseDescriptors:(NSArray*)responseDescriptors
                           successBlock:(void(^)(NSArray* items))successBlock
                           failureBlock:(void(^)(NSError* error))failureBlock
@@ -98,6 +106,8 @@
         [operation setWillMapDeserializedResponseBlock:willMapDeserializedResponseBlock];
     
     [operation start];
+    
+    return operation;
 }
 
 @end

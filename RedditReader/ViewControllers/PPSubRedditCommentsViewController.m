@@ -20,6 +20,8 @@
 @property (nonatomic, strong, readonly) PPRedditFeedManager *redditFeedManager;
 @property (nonatomic, strong) NSMutableArray *redditComments;
 
+@property (nonatomic, strong) RKObjectRequestOperation* loadingOperation;
+
 @end
 
 @implementation PPSubRedditCommentsViewController
@@ -45,29 +47,8 @@
     
     [self setNavigationBar];
     [self setTreeView];
-    
-    [self.redditFeedManager commentsForSubRedditWithPermalink:self.feed.permalink
-                                                 successBlock: ^(NSArray* comments){
-        
-        self.redditComments = [NSMutableArray arrayWithArray:comments];
-        
-        self.loadingMessageLabel.hidden = YES;
-        self.activityIndicator.hidden = YES;
-        [self.activityIndicator stopAnimating];
-        
-        self.treeview.hidden = NO;
-        [self.treeview reloadData];
-        
-    } failureBlock:^(NSError *error) {
-        
-        self.activityIndicator.hidden = YES;
-        [self.activityIndicator stopAnimating];
-        
-        self.loadingMessageLabel.text = @"Could not load data...";
-        
-#pragma message "TODO: Retry button!!!"
-        
-    }];
+
+    [self loadData];
 }
 
 #pragma mark - RATreeViewDataSource
@@ -104,7 +85,25 @@
 
 -(void)closeButtonTapped:(id)sender
 {
+    if(self.loadingOperation)
+    {
+       [self.loadingOperation cancel];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)retryFailedLoadingGestureRecognizerTap:(UIGestureRecognizer*)gestureRecognizer
+{
+    [self.view removeGestureRecognizer:gestureRecognizer];
+    
+    self.loadingMessageLabel.numberOfLines = 1;
+    self.loadingMessageLabel.text = @"Loading data...";
+    
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+    
+   [self loadData];
 }
 
 #pragma mark - Private methods
@@ -123,7 +122,39 @@
     self.treeview.delegate = self;
     [self.treeview registerNib:[UINib nibWithNibName:@"PPSubRedditCommentCell" bundle:nil] forCellReuseIdentifier:ppSubRedditCommentCellIdentifier];
     self.treeview.rowHeight = ppSubRedditCommentCellHeight;
+}
 
+-(void)loadData
+{
+    self.loadingOperation = [self.redditFeedManager commentsForSubRedditWithPermalink:self.feed.permalink
+                                                 successBlock: ^(NSArray* comments){
+                                                     
+                                                     self.loadingOperation = nil;
+                                                     
+                                                     self.redditComments = [NSMutableArray arrayWithArray:comments];
+                                                     
+                                                     self.loadingMessageLabel.hidden = YES;
+                                                     self.activityIndicator.hidden = YES;
+                                                     [self.activityIndicator stopAnimating];
+                                                     
+                                                     self.treeview.hidden = NO;
+                                                     [self.treeview reloadData];
+                                                     
+                                                 } failureBlock:^(NSError *error) {
+                                                     
+                                                     self.loadingOperation = nil;
+                                                     
+                                                     self.activityIndicator.hidden = YES;
+                                                     [self.activityIndicator stopAnimating];
+                                                     
+                                                     self.loadingMessageLabel.numberOfLines = 2;
+                                                     self.loadingMessageLabel.text = @"Could not load data.\nTouch to retry again.";
+                                                     
+                                                     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(retryFailedLoadingGestureRecognizerTap:)];
+                                                     tapGestureRecognizer.numberOfTapsRequired = 1;
+                                                     tapGestureRecognizer.numberOfTouchesRequired = 1;
+                                                     [self.view addGestureRecognizer:tapGestureRecognizer];
+                                                 }];
 }
 
 @end

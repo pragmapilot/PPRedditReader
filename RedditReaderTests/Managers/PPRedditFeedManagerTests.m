@@ -7,10 +7,12 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <RestKit/RestKit.h>
 #import "PPRedditFeedManager.h"
 #import "PPTestMacros.h"
 #import "PPRedditFeed.h"
 #import "PPRedditComment.h"
+#import "PPRedditFeedCollection.h"
 #import "PPUtils.h"
 
 @interface PPRedditFeedManagerTests : XCTestCase
@@ -40,15 +42,16 @@
     // Set the flag
     StartBlock();
     
-    [self.manager defaultPageFeedsWithSuccessBlock:^(NSArray *feeds) {
-    
+    RKObjectRequestOperation* operation =[self.manager defaultPageFeedsAfter:nil successBlock:^(PPRedditFeedCollection *feedColletion) {
         EndBlock();
-        XCTAssertNotNil(feeds, @"%s: feed array can't be nil on success!", __PRETTY_FUNCTION__);
-        
+        XCTAssertNotNil(feedColletion, @"%s: feed collection can't be nil on success!", __PRETTY_FUNCTION__);
+        XCTAssertTrue(feedColletion.feeds, @"%s: feed collection count must be greater than zero on success!", __PRETTY_FUNCTION__);
     } failureBlock:^(NSError *error) {
         EndBlock();
         XCTAssertNotNil(error, @"%s: error can't be nil on failure!", __PRETTY_FUNCTION__);
     }];
+    
+    XCTAssertNotNil(operation, @"Operation can't be nill! How do you expect clients to cancel it?");
     
     WaitUntilBlockCompletes();
 }
@@ -59,16 +62,15 @@
     
     StartBlock();
     
-    [self.manager defaultPageFeedsWithSuccessBlock:^(NSArray *feedsFromManager) {
+    [self.manager defaultPageFeedsAfter:nil successBlock:^(PPRedditFeedCollection *feedColletion) {
         EndBlock();
-        feeds = feedsFromManager;
-    } failureBlock: ^(NSError *error) {
-         EndBlock();
-     }];
-
+        feeds = feedColletion.feeds;
+    } failureBlock:^(NSError *error) {
+        EndBlock();
+    }];
     
     WaitUntilBlockCompletes();
-
+   
     __block PPRedditFeed *feedWithComments;
     
     [feeds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -83,7 +85,7 @@
     
     RestartBlock();
     
-    [self.manager commentsForSubRedditWithPermalink: feedWithComments.permalink
+    RKObjectRequestOperation* operation = [self.manager commentsForSubRedditWithPermalink: feedWithComments.permalink
                                        successBlock:^(NSArray *comments) {
                                            EndBlock();
                                            XCTAssertNotNil(comments, @"%s: comments array can't be nil on success!", __PRETTY_FUNCTION__);
@@ -93,6 +95,8 @@
                                            XCTAssertNotNil(error, @"%s: error can't be nil on failure!", __PRETTY_FUNCTION__);
     }];
     
+    XCTAssertNotNil(operation, @"Operation can't be nill! How do you expect clients to cancel it?");
+
     WaitUntilBlockCompletes();
     
     RestartBlock();
