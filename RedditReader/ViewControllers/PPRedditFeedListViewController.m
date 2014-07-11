@@ -47,25 +47,7 @@
     [super viewDidLoad];
     
     [self setUpTable];
-    
-    [self loadDataWithSuccessBlock:^() {
-        
-        self.loadingMessageLabel.hidden = YES;
-        self.activityIndicator.hidden = YES;
-        [self.activityIndicator stopAnimating];
-        
-        self.table.hidden = NO;
-        [self.table reloadData];
-    
-    } failureBlock:^(NSError *error) {
-    
-        self.activityIndicator.hidden = YES;
-        [self.activityIndicator stopAnimating];
-        
-        self.loadingMessageLabel.text = @"Could not load data...";
-        
-        // TODO: Touch anywhere to try again -> gesture recognizer!!
-    }];
+    [self loadData];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -141,11 +123,52 @@
     }
 }
 
+#pragma mark - Handlers
+
+-(void)retryFailedLoadingGestureRecognizerTap:(UIGestureRecognizer*)gestureRecognizer
+{
+    [self.view removeGestureRecognizer:gestureRecognizer];
+
+    self.loadingMessageLabel.numberOfLines = 1;
+    self.loadingMessageLabel.text = @"Loading data...";
+
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+    
+    [self loadData];
+}
+
 #pragma mark - Helper methods
 
 -(void)setUpTable
 {
     self.table.tableFooterView = [[PPLoadMoreDataView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.table.bounds), ppLoadMoreDataViewHeight)];
+}
+
+-(void)loadData
+{
+    [self loadDataWithSuccessBlock:^() {
+        
+        self.loadingMessageLabel.hidden = YES;
+        self.activityIndicator.hidden = YES;
+        [self.activityIndicator stopAnimating];
+        
+        self.table.hidden = NO;
+        [self.table reloadData];
+        
+    } failureBlock:^(NSError *error) {
+        
+        self.activityIndicator.hidden = YES;
+        [self.activityIndicator stopAnimating];
+        
+        self.loadingMessageLabel.numberOfLines = 2;
+        self.loadingMessageLabel.text = @"Could not load data.\nTouch to retry again.";
+        
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(retryFailedLoadingGestureRecognizerTap:)];
+        tapGestureRecognizer.numberOfTapsRequired = 1;
+        tapGestureRecognizer.numberOfTouchesRequired = 1;
+        [self.view addGestureRecognizer:tapGestureRecognizer];
+    }];
 }
 
 /**

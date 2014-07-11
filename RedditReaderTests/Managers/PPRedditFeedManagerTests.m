@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <RestKit/RestKit.h>
 #import "PPRedditFeedManager.h"
 #import "PPTestMacros.h"
 #import "PPRedditFeed.h"
@@ -41,7 +42,7 @@
     // Set the flag
     StartBlock();
     
-    [self.manager defaultPageFeedsAfter:nil successBlock:^(PPRedditFeedCollection *feedColletion) {
+    RKObjectRequestOperation* operation =[self.manager defaultPageFeedsAfter:nil successBlock:^(PPRedditFeedCollection *feedColletion) {
         EndBlock();
         XCTAssertNotNil(feedColletion, @"%s: feed collection can't be nil on success!", __PRETTY_FUNCTION__);
         XCTAssertTrue(feedColletion.feeds, @"%s: feed collection count must be greater than zero on success!", __PRETTY_FUNCTION__);
@@ -49,6 +50,8 @@
         EndBlock();
         XCTAssertNotNil(error, @"%s: error can't be nil on failure!", __PRETTY_FUNCTION__);
     }];
+    
+    XCTAssertNotNil(operation, @"Operation can't be nill! How do you expect clients to cancel it?");
     
     WaitUntilBlockCompletes();
 }
@@ -82,7 +85,7 @@
     
     RestartBlock();
     
-    [self.manager commentsForSubRedditWithPermalink: feedWithComments.permalink
+    RKObjectRequestOperation* operation = [self.manager commentsForSubRedditWithPermalink: feedWithComments.permalink
                                        successBlock:^(NSArray *comments) {
                                            EndBlock();
                                            XCTAssertNotNil(comments, @"%s: comments array can't be nil on success!", __PRETTY_FUNCTION__);
@@ -92,6 +95,8 @@
                                            XCTAssertNotNil(error, @"%s: error can't be nil on failure!", __PRETTY_FUNCTION__);
     }];
     
+    XCTAssertNotNil(operation, @"Operation can't be nill! How do you expect clients to cancel it?");
+
     WaitUntilBlockCompletes();
     
     RestartBlock();
