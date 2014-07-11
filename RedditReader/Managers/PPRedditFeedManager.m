@@ -8,24 +8,33 @@
 
 #import "PPRedditFeedManager.h"
 #import <RestKit/RestKit.h>
-#import "PPRedditFeed.h"
+#import "PPRedditFeedCollection.h"
 #import "PPRedditComment.h"
 #import "PPURLFactory.h"
 
 @implementation PPRedditFeedManager
 
-- (void)defaultPageFeedsWithSuccessBlock:(void(^)(NSArray* feeds))successBlock
-                            failureBlock:(void(^)(NSError* error))failureBlock
+- (void)defaultPageFeedsAfter: (NSString*)after
+                 successBlock:(void(^)(PPRedditFeedCollection* feedColletion))successBlock
+                 failureBlock:(void(^)(NSError* error))failureBlock
 {
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[PPRedditFeed restKitMapping]
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[PPRedditFeedCollection restKitMapping]
                                                                                             method:RKRequestMethodAny
                                                                                        pathPattern:nil
-                                                                                           keyPath:@"data.children.data"
+                                                                                           keyPath:@"data"
                                                                                        statusCodes:nil];
     
-    [self executeRequestOperationWithURL:[PPURLFactory redditDefaultPageJSONFeedURLString]
+    void (^internalSuccessBlock)(NSArray* feeds) = ^void(NSArray* feeds)
+    {
+        if(feeds && [feeds.firstObject isKindOfClass:[PPRedditFeedCollection class]] && successBlock)
+        {
+            successBlock(feeds.firstObject);
+        }
+    };
+
+    [self executeRequestOperationWithURL:[PPURLFactory redditDefaultPageJSONFeedURLStringAfter:after]
                       responseDescriptors:@[responseDescriptor]
-                            successBlock:successBlock
+                            successBlock:internalSuccessBlock
                             failureBlock:failureBlock];
 }
 

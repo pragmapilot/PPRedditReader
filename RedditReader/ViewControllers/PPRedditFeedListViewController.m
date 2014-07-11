@@ -11,13 +11,16 @@
 #import "PPRedditFeedCell.h"
 #import "PPRedditFeedCell+DataBind.h"
 #import "PPSubRedditViewController.h"
+#import "PPRedditFeedCollection.h"
 #import "PPRedditFeed.h"
 #import "PPSubRedditCommentsViewController.h"
+#import "PPUtils.h"
 
 @interface PPRedditFeedListViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong, readonly) PPRedditFeedManager *redditFeedManager;
-@property (nonatomic, strong) NSMutableArray *redditPosts;
+@property (nonatomic, strong) PPRedditFeedCollection *feedCollection;
+@property (nonatomic, readwrite) BOOL loadingData;
 
 @end
 
@@ -30,6 +33,7 @@
     if(self = [super initWithCoder:aDecoder])
     {
         _redditFeedManager = [PPRedditFeedManager new];
+        self.loadingData = NO;
     }
     
     return self;
@@ -41,9 +45,9 @@
 {
     [super viewDidLoad];
     
-    [self.redditFeedManager defaultPageFeedsWithSuccessBlock:^(NSArray *feeds) {
-        
-        self.redditPosts = [NSMutableArray arrayWithArray:feeds];
+    [self setUpTable];
+    
+    [self loadDataWithSuccessBlock:^() {
         
         self.loadingMessageLabel.hidden = YES;
         self.activityIndicator.hidden = YES;
@@ -51,16 +55,15 @@
         
         self.table.hidden = NO;
         [self.table reloadData];
-        
+    
     } failureBlock:^(NSError *error) {
-        
+    
         self.activityIndicator.hidden = YES;
         [self.activityIndicator stopAnimating];
         
         self.loadingMessageLabel.text = @"Could not load data...";
         
-        // TODO: Retry button!!!
-        
+        // TODO: Touch anywhere to try again -> gesture recognizer!!
     }];
 }
 
@@ -75,7 +78,7 @@
     if([segue.identifier isEqualToString:@"feedListToSubRedditSegue"])
     {
         NSIndexPath *indexPathOfSelectedRow = [self.table indexPathForSelectedRow];
-        PPRedditFeed *subReddit = self.redditPosts[indexPathOfSelectedRow.row];
+        PPRedditFeed *subReddit = self.feedCollection.feeds[indexPathOfSelectedRow.row];
         
         PPSubRedditViewController *destinationViewController = segue.destinationViewController;
         destinationViewController.feed = subReddit;
@@ -87,7 +90,7 @@
         CGPoint touchPoint = [button.superview convertPoint:button.center toView:self.table];
         NSIndexPath *indexPathOfSelectedRow = [self.table indexPathForRowAtPoint:touchPoint];
         
-        PPRedditFeed *subReddit = self.redditPosts[indexPathOfSelectedRow.row];
+        PPRedditFeed *subReddit = self.feedCollection.feeds[indexPathOfSelectedRow.row];
         
         PPSubRedditCommentsViewController *commentsViewController = (PPSubRedditCommentsViewController *)((UINavigationController*)segue.destinationViewController).topViewController;
         commentsViewController.feed = subReddit;
@@ -98,13 +101,13 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.redditPosts.count;
+    return self.feedCollection.feeds.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PPRedditFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:ppRedditFeedCellIdentifier];
-    [cell dataBindWithRedditFeed:self.redditPosts[indexPath.row ]];
+    [cell dataBindWithRedditFeed:self.feedCollection.feeds[indexPath.row ]];
     
     return cell;
 }
@@ -114,6 +117,76 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    BOOL loadingVisible = CGRectIntersectsRect(self.table.bounds,self.table.tableFooterView.frame);
+    
+    if(loadingVisible && ! IsEmpty(self.feedCollection.after))
+    {
+        [self loadDataWithSuccessBlock:^{
+            [self.table reloadData];
+        } failureBlock:^(NSError *error) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                message:@"Can't load more data due to an error."
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles: nil];
+            [alertView show];
+        }];
+    }
+}
+
+#pragma mark - Helper methods
+
+-(void)setUpTable
+{
+#pragma message "TO TABLE SETUP MEHTOD"
+    UILabel *loadingView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.table.bounds), 60)];
+    loadingView.textColor = [UIColor blackColor];
+    loadingView.textAlignment = NSTextAlignmentCenter;
+    loadingView.text = @"Loading more data...";
+    loadingView.backgroundColor = [UIColor redColor];
+    self.table.tableFooterView = loadingView;
+}
+
+/**
+ @discussion alters the feedCollection on success. Caller shouldn't do it.
+ */
+-(void)loadDataWithSuccessBlock:(void(^)(void))successBlock failureBlock:(void(^)(NSError *error))failureBlock
+{
+    if(! self.loadingData)
+    {
+        self.loadingData = YES;
+        [self.redditFeedManager defaultPageFeedsAfter:self.feedCollection.after
+                                         successBlock:^(PPRedditFeedCollection *feedCollection) {
+                                             
+                                             if(! self.feedCollection)
+                                             {
+                                                 self.feedCollection = feedCollection;
+                                             }
+                                             else
+                                             {
+                                                 self.feedCollection.after = feedCollection.after;
+                                                 self.feedCollection.before = feedCollection.before;
+                                                 [self.feedCollection.feeds addObjectsFromArray:feedCollection.feeds];
+                                             }
+                                             
+                                             if(successBlock)
+                                                 successBlock();
+                                             
+                                             self.loadingData = NO;
+                                             
+                                         } failureBlock:^(NSError *error) {
+                                             if(failureBlock)
+                                                 failureBlock(error);
+                                             
+                                             self.loadingData = NO;
+                                         }];
+    }
 }
 
 @end

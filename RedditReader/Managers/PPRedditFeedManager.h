@@ -8,10 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@class PPRedditFeedCollection;
+
 @interface PPRedditFeedManager : NSObject
 
-- (void)defaultPageFeedsWithSuccessBlock:(void(^)(NSArray* feeds))successBlock failureBlock:(void(^)(NSError* error))failureBlock;
+- (void)defaultPageFeedsAfter: (NSString*)after
+                 successBlock:(void(^)(PPRedditFeedCollection* feedColletion))successBlock
+                 failureBlock:(void(^)(NSError* error))failureBlock;
 
--(void)commentsForSubRedditWithPermalink:(NSString*)permalink successBlock:(void(^)(NSArray* comments))successBlock failureBlock:(void(^)(NSError* error))failureBlock;
+-(void)commentsForSubRedditWithPermalink:(NSString*)permalink
+                            successBlock:(void(^)(NSArray* comments))successBlock
+                            failureBlock:(void(^)(NSError* error))failureBlock;
 
 @end

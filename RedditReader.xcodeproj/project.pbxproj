@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		333627CF942A4AC1B60CE3FB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 101062E7FFDC4646B5E34EB4 /* libPods.a */; };
 		FD55837E196B01E700DEE9E1 /* UIColor+RedditReader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD55837D196B01E700DEE9E1 /* UIColor+RedditReader.m */; };
+		FD6336F9197019DC00A6FE33 /* PPRedditFeedCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6336F8197019DC00A6FE33 /* PPRedditFeedCollection.m */; };
 		FDAB0342196BE59D00783EAA /* PPRedditFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB0341196BE59D00783EAA /* PPRedditFeedCell.m */; };
 		FDAB0345196BE6DE00783EAA /* PPRedditFeedCell+DataBind.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB0344196BE6DE00783EAA /* PPRedditFeedCell+DataBind.m */; };
 		FDAB0348196BE7FC00783EAA /* PPViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAB0347196BE7FC00783EAA /* PPViewFactory.m */; };
@@ -61,6 +62,8 @@
 		5EBFAF455F374121BBE003C3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FD55837C196B01E700DEE9E1 /* UIColor+RedditReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+RedditReader.h"; path = "Categories/UIColor+RedditReader.h"; sourceTree = "<group>"; };
 		FD55837D196B01E700DEE9E1 /* UIColor+RedditReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+RedditReader.m"; path = "Categories/UIColor+RedditReader.m"; sourceTree = "<group>"; };
+		FD6336F7197019DC00A6FE33 /* PPRedditFeedCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPRedditFeedCollection.h; path = DataObjects/PPRedditFeedCollection.h; sourceTree = "<group>"; };
+		FD6336F8197019DC00A6FE33 /* PPRedditFeedCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPRedditFeedCollection.m; path = DataObjects/PPRedditFeedCollection.m; sourceTree = "<group>"; };
 		FDAB0340196BE59D00783EAA /* PPRedditFeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPRedditFeedCell.h; path = Views/Cells/PPRedditFeedCell.h; sourceTree = "<group>"; };
 		FDAB0341196BE59D00783EAA /* PPRedditFeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPRedditFeedCell.m; path = Views/Cells/PPRedditFeedCell.m; sourceTree = "<group>"; };
 		FDAB0343196BE6DE00783EAA /* PPRedditFeedCell+DataBind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PPRedditFeedCell+DataBind.h"; path = "Categories/CellDataBinding/PPRedditFeedCell+DataBind.h"; sourceTree = "<group>"; };
@@ -297,6 +300,8 @@
 				FDAB55A0196EAB87006FC42D /* PPBaseRedditDataObject.m */,
 				FDAB55A2196EAC37006FC42D /* PPRedditComment.h */,
 				FDAB55A3196EAC37006FC42D /* PPRedditComment.m */,
+				FD6336F7197019DC00A6FE33 /* PPRedditFeedCollection.h */,
+				FD6336F8197019DC00A6FE33 /* PPRedditFeedCollection.m */,
 			);
 			name = DataObjects;
 			sourceTree = "<group>";
@@ -476,6 +481,7 @@
 				FDAB55A7196EFEBD006FC42D /* PPSubRedditCommentCell.m in Sources */,
 				FDAB0345196BE6DE00783EAA /* PPRedditFeedCell+DataBind.m in Sources */,
 				FDF20191196B03A500347A45 /* PPAppearanceConfigurator.m in Sources */,
+				FD6336F9197019DC00A6FE33 /* PPRedditFeedCollection.m in Sources */,
 				FDAB034B196BEA1200783EAA /* PPUtils.m in Sources */,
 				FDAB559B196E835D006FC42D /* PPSubRedditCommentsViewController.m in Sources */,
 				FDAB559E196E8934006FC42D /* UIViewController+TwoLineNavBarTitle.m in Sources */,
