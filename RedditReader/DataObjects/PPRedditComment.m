@@ -21,37 +21,27 @@
                                                   @"subreddit_id":    @"subredditId",
                                                   @"body":            @"body",
                                                   @"ups":             @"ups",
-                                                }];
+                                                  }];
 
-    // TODO: nested replies...
     RKDynamicMapping *dynamicMapping = [RKDynamicMapping new];
     [dynamicMapping setObjectMappingForRepresentationBlock:^RKObjectMapping *(id representation) {
         
-        RKObjectMapping *result = nil;//mapping;
+        RKObjectMapping *result = nil; //mapping; -> só mostra o primeiro nível de recursividade
         
-        // If there are no replies to the comment JSON has "replies":"" --> mapped to NSString!!
-        if([representation isKindOfClass:[NSDictionary class]])
+        if([representation isKindOfClass:[NSString class]] && [representation isEqualToString:@""])
         {
-            NSDictionary *replies = (NSDictionary*) representation;
-            
-            NSDictionary *firstDataInReplies = (NSDictionary*)replies[@"data"];
-            NSArray *children = (NSArray*)firstDataInReplies[@"children"];
-            
-            if([children.firstObject isKindOfClass:[NSString class]])
-            {
-                result = nil;
-            }
+            result = nil;
         }
         
         return result;
     }];
-    
+   
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"replies"
                                                                             toKeyPath:@"replies"
                                                                           withMapping:dynamicMapping]];
+    
     return mapping;
 }
-
 
 @end
 
