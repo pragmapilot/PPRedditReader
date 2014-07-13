@@ -63,7 +63,7 @@ static NSInteger const numComments = baseInteger + 2;
     NSArray *subviews = self.vc.view.subviews;
     XCTAssertTrue([subviews containsObject:self.vc.table], @"View does not have a table subview");
     XCTAssertTrue([subviews containsObject:self.vc.activityIndicator], @"View does not have an activity indicator subview");
-    XCTAssertTrue([subviews containsObject:self.vc.loadingDataLabel], @"View does not have a loading data label subview");
+    XCTAssertTrue([subviews containsObject:self.vc.loadingMessageLabel], @"View does not have a loading message label subview");
 }
 
 -(void)testThatTableViewLoads
@@ -105,7 +105,7 @@ static NSInteger const numComments = baseInteger + 2;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     PPRedditFeedCell *cell = [self cellForIndexPath:indexPath];
    
-    NSString *expectedReuseIdentifier = @"RedditFeedCell";
+    NSString *expectedReuseIdentifier = ppRedditFeedCellIdentifier;
     XCTAssertTrue([cell.reuseIdentifier isEqualToString:expectedReuseIdentifier], @"Table does not create reusable cells");
 }
 
@@ -130,23 +130,23 @@ static NSInteger const numComments = baseInteger + 2;
     NSString *expectedCommentsText = [NSString stringWithFormat:@"%d comments", self.feed.numComments];
     
     XCTAssertEqualObjects(cell.commentsLabel.text, expectedCommentsText, @"Got %@ for cell comments label text and should have gotten %@", cell.commentsLabel.text, expectedCommentsText);
+    
+    XCTAssertTrue(cell.commentsButton.enabled, @"Comments button must be enabled if there are comments.");
+    
+    // Test "No comments"
+    self.feed.numComments = 0;
+    [cell dataBindWithRedditFeed:self.feed];
+    
+    XCTAssertFalse(cell.commentsButton.enabled, @"Comments button must be disabled if there are no comments.");
+    
+    // Reset comments
+    self.feed.numComments = numComments;
 }
 
 #pragma mark - Helper methods
 
 -(PPRedditFeedCell*)cellForIndexPath: (NSIndexPath*)indexPath
 {
-    // tableView:cellForRowAtIndexPath is not public, so it has to be invoked with preformSelector, on main thread
-   /* __block PPRedditFeedCell *cell = nil;
-    
-    NSOperationQueue* targetQueue = [NSOperationQueue mainQueue];
-    
-    [targetQueue addOperationWithBlock:^{
-        cell = [self.vc performSelector:@selector(tableView:cellForRowAtIndexPath:) withObject:self.vc.table withObject:indexPath];
-    }];
-    
-    [targetQueue waitUntilAllOperationsAreFinished];*/
-    
     PPRedditFeedCell *cell = nil;
     
     cell = [self.vc performSelector:@selector(tableView:cellForRowAtIndexPath:) withObject:self.vc.table withObject:indexPath];

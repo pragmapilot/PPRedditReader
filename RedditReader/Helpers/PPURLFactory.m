@@ -7,6 +7,7 @@
 //
 
 #import "PPURLFactory.h"
+#import "PPUtils.h"
 
 static NSDictionary *_urlMappings;
 
@@ -18,9 +19,21 @@ static NSString const * jsonExtension = @".json";
 
 #pragma mark - Public methods
 
-+ (NSString*)redditDefaultPageJSONFeedURLString
++(NSString*)redditDefaultPageJSONFeedURLStringAfter:(NSString*)after
 {
-    return [NSString stringWithFormat:@"%@/%@", [PPURLFactory urlMappings][redditBaseURLKey], jsonExtension];
+    NSMutableString* url = [NSMutableString stringWithFormat:@"%@/%@", [PPURLFactory urlMappings][redditBaseURLKey], jsonExtension];
+    
+    if(!IsEmpty(after))
+    {
+        [url appendFormat:@"?after=%@", after];
+    }
+    
+    return [url copy];
+}
+
++(NSString*)urlForSubredditCommentsJSONWithPermalink:(NSString*)permalink
+{
+    return [NSString stringWithFormat:@"%@%@%@", [PPURLFactory urlMappings][redditBaseURLKey],permalink, jsonExtension];
 }
 
 #pragma mark - Private methods
