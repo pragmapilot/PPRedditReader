@@ -110,8 +110,10 @@
     
     if(loadingVisible && ! IsEmpty(self.feedCollection.after))
     {
+        __weak typeof(self) weakSelf = self;
+        
         [self loadDataWithSuccessBlock:^{
-            [self.table reloadData];
+            [weakSelf.table reloadData];
         } failureBlock:^(NSError *error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
                                                                 message:@"Can't load more data due to an error."
@@ -147,27 +149,29 @@
 
 -(void)loadData
 {
+    __weak typeof(self) weakSelf = self;
+    
     [self loadDataWithSuccessBlock:^() {
         
-        self.loadingMessageLabel.hidden = YES;
-        self.activityIndicator.hidden = YES;
-        [self.activityIndicator stopAnimating];
+        weakSelf.loadingMessageLabel.hidden = YES;
+        weakSelf.activityIndicator.hidden = YES;
+        [weakSelf.activityIndicator stopAnimating];
         
-        self.table.hidden = NO;
-        [self.table reloadData];
+        weakSelf.table.hidden = NO;
+        [weakSelf.table reloadData];
         
     } failureBlock:^(NSError *error) {
         
-        self.activityIndicator.hidden = YES;
-        [self.activityIndicator stopAnimating];
+        weakSelf.activityIndicator.hidden = YES;
+        [weakSelf.activityIndicator stopAnimating];
         
-        self.loadingMessageLabel.numberOfLines = 2;
-        self.loadingMessageLabel.text = @"Could not load data.\nTouch to retry again.";
+        weakSelf.loadingMessageLabel.numberOfLines = 2;
+        weakSelf.loadingMessageLabel.text = @"Could not load data.\nTouch to retry again.";
         
-        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(retryFailedLoadingGestureRecognizerTap:)];
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(retryFailedLoadingGestureRecognizerTap:)];
         tapGestureRecognizer.numberOfTapsRequired = 1;
         tapGestureRecognizer.numberOfTouchesRequired = 1;
-        [self.view addGestureRecognizer:tapGestureRecognizer];
+        [weakSelf.view addGestureRecognizer:tapGestureRecognizer];
     }];
 }
 
@@ -179,30 +183,32 @@
     if(! self.loadingData)
     {
         self.loadingData = YES;
+        __weak typeof(self) weakSelf = self;
+
         [self.redditFeedManager defaultPageFeedsAfter:self.feedCollection.after
                                          successBlock:^(PPRedditFeedCollection *feedCollection) {
                                              
-                                             if(! self.feedCollection)
+                                             if(! weakSelf.feedCollection)
                                              {
-                                                 self.feedCollection = feedCollection;
+                                                 weakSelf.feedCollection = feedCollection;
                                              }
                                              else
                                              {
-                                                 self.feedCollection.after = feedCollection.after;
-                                                 self.feedCollection.before = feedCollection.before;
-                                                 [self.feedCollection.feeds addObjectsFromArray:feedCollection.feeds];
+                                                 weakSelf.feedCollection.after = feedCollection.after;
+                                                 weakSelf.feedCollection.before = feedCollection.before;
+                                                 [weakSelf.feedCollection.feeds addObjectsFromArray:feedCollection.feeds];
                                              }
                                              
                                              if(successBlock)
                                                  successBlock();
                                              
-                                             self.loadingData = NO;
+                                             weakSelf.loadingData = NO;
                                              
                                          } failureBlock:^(NSError *error) {
                                              if(failureBlock)
                                                  failureBlock(error);
                                              
-                                             self.loadingData = NO;
+                                             weakSelf.loadingData = NO;
                                          }];
     }
 }
