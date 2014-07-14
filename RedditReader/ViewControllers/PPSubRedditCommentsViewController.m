@@ -140,34 +140,36 @@
 
 -(void)loadData
 {
+    __weak typeof(self) weakSelf = self;
+
     self.loadingOperation = [self.redditFeedManager commentsForSubRedditWithPermalink:self.feed.permalink
                                                  successBlock: ^(NSArray* comments){
                                                      
-                                                     self.loadingOperation = nil;
+                                                     weakSelf.loadingOperation = nil;
                                                      
-                                                     self.redditComments = [NSMutableArray arrayWithArray:comments];
+                                                     weakSelf.redditComments = [NSMutableArray arrayWithArray:comments];
                                                     
-                                                     self.loadingMessageLabel.hidden = YES;
-                                                     self.activityIndicator.hidden = YES;
-                                                     [self.activityIndicator stopAnimating];
+                                                     weakSelf.loadingMessageLabel.hidden = YES;
+                                                     weakSelf.activityIndicator.hidden = YES;
+                                                     [weakSelf.activityIndicator stopAnimating];
                                                      
-                                                     self.treeview.hidden = NO;
-                                                     [self.treeview reloadData];
+                                                     weakSelf.treeview.hidden = NO;
+                                                     [weakSelf.treeview reloadData];
                                                      
                                                  } failureBlock:^(NSError *error) {
                                                      
-                                                     self.loadingOperation = nil;
+                                                     weakSelf.loadingOperation = nil;
                                                      
-                                                     self.activityIndicator.hidden = YES;
-                                                     [self.activityIndicator stopAnimating];
+                                                     weakSelf.activityIndicator.hidden = YES;
+                                                     [weakSelf.activityIndicator stopAnimating];
                                                      
-                                                     self.loadingMessageLabel.numberOfLines = 2;
-                                                     self.loadingMessageLabel.text = @"Could not load data.\nTouch to retry again.";
+                                                     weakSelf.loadingMessageLabel.numberOfLines = 2;
+                                                     weakSelf.loadingMessageLabel.text = @"Could not load data.\nTouch to retry again.";
                                                      
-                                                     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(retryFailedLoadingGestureRecognizerTap:)];
+                                                     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(retryFailedLoadingGestureRecognizerTap:)];
                                                      tapGestureRecognizer.numberOfTapsRequired = 1;
                                                      tapGestureRecognizer.numberOfTouchesRequired = 1;
-                                                     [self.view addGestureRecognizer:tapGestureRecognizer];
+                                                     [weakSelf.view addGestureRecognizer:tapGestureRecognizer];
                                                  }];
 }
 
